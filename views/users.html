@@ -1,0 +1,55 @@
+<!--Bootstrapped header -->
+<!-- Header -->
+<% include header.html %>
+
+<!--Bootstrapped nav bar-->
+<!-- Navigation -->
+<% include navbar.html %>
+
+<!-- Page Content -->
+
+
+<!-- Page Content -->
+<div class="container">
+
+	<div class="row">
+		
+		<!--Bootstrapped profile menu -->
+		<!-- Profile Side Menu -->
+		<% include profile_menu.html %>
+		
+		<div class="col-md-9">
+			<h2>Project List</h2>
+			<p>Projects Selected</p>            
+			<table class="table table-hover">
+		    	<thead>
+			      	<tr>
+			        	<th>User ID</th>
+			        	<th>User Name</th>
+			        	<th>Password</th>
+			        	<th>Mailing Address</th>
+			        	<th>Action</th>
+			      	</tr>
+		    	</thead>
+		    	
+		    	<tbody>
+		    		<% if (admin) {%>
+						<% for(var i = 0;i < data.length;i++) { %>
+							<tr>
+								<td><%=data[i].id%></td>
+								<td><%=data[i].username%></td>
+								<td><%=data[i].password%></td>
+								<td><%=data[i].mailing_address%></td>
+								<td><a class="idea-view" href="/user/<%=data[i].id%>">View</a></td>
+							</tr>
+						<% } %>
+					<% } %>
+		    	</tbody>
+		  	</table>
+		</div>
+	</div>
+</div>
+
+<!-- Bootstrapped Footer -->
+<!-- Footer -->
+<% include footer.html %>

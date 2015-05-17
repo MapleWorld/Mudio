@@ -1,0 +1,58 @@
+<!--Bootstrapped header -->
+<!-- Header -->
+<% include header.html %>
+
+<!--Bootstrapped nav bar-->
+<!-- Navigation -->
+<% include navbar.html %>
+
+<!-- Page Content -->
+<div class="container">
+
+	<div class="row">
+		
+		<!--Bootstrapped profile menu -->
+		<!-- Profile Side Menu -->
+		<% include profile_menu.html %>
+
+		<div class="col-md-9">
+			<h2>My Project List</h2>
+			<p>All Projects Submitted By This user.</p>            
+			<table class="table table-hover">
+			    <thead>
+					<tr>
+						<th width="50px">ID</th>
+						<th>Project Name</th>
+						<th>Project Description</th>
+						<th>Community</th>
+						<th>Created Date</th>
+						<th>Number of Likes</th>
+						<th>Creator ID</th>
+						<th>Action</th>
+					</tr>
+			    </thead>
+			    <tbody>
+					<% for(var i = 0;i < data.length;i++) { %>
+						<tr>
+							<td><%=data[i].p_id%></td>
+							<td><%=data[i].name%></td>
+							<td><%=data[i].description%></td>
+							<td><%=data[i].community%></td>
+							<td><%=data[i].created_date%></td>
+							<td><%=data[i].likes%></td>
+							<td><%=data[i].initiator_id%></td>
+							<td>
+								<a class="project-view" href="/project/<%=data[i].p_id%>">View</a>
+				            	<a class="project-edit" href="/edit_project/<%=data[i].p_id%>">Edit</a>
+				            	<a class="project-delete" onClick="deleteProject(<%=data[i].p_id%>)">Delete</a>
+				        	</td>
+						</tr>
+					<% } %>
+			    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- Bootstrapped Footer -->
+<!-- Footer -->
+<% include footer.html %>

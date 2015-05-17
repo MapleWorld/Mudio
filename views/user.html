@@ -1,0 +1,148 @@
+<!--Bootstrapped header -->
+<!-- Header -->
+<% include header.html %>
+
+<!--Bootstrapped nav bar-->
+<!-- Navigation -->
+<% include navbar.html %>
+
+<!-- Page Content -->
+<div class="container">
+	
+	<div id="user_info_form">
+			
+		<form class="col-sm-4 control-label" id="general-user-info-form" method="post" autocomplete="on"> 
+			
+			<div class="form-group">		
+				<h3>General User Information </h3>
+			</div>
+			
+			<div class="project-info-form-err-area"></div>
+	
+			<div class="form-group">
+		    	<label >User ID </label>
+		    	<p><%=data[0].id%></p>
+		  	</div>
+		  	
+			<div class="form-group">
+		    	<label>User Name</label>
+		    	<p ><%=data[0].username%></p>
+		  	</div>
+		  	
+		  	<% if (auth) { %>
+		  		<% if (admin) { %>
+					<div class="form-group">
+				    	<label>User Password</label>
+				    	<p><%=data[0].password%></p>
+				  	</div>
+				<% } %>
+			<% } %>
+		  	
+		  	<div class="form-group">
+		    	<label>User Email</label>
+		    	<p><%=data[0].email%></p>
+		  	</div>
+	
+			<div class="form-group">
+		    	<label >User Created Date: </label>
+		    	<p><%=data[0].created_date%></p>
+		  	</div>
+		</form>
+		
+		<form class="col-sm-4 control-label" id="initiator-user-info-form" method="put" autocomplete="on"> 
+
+			<div class="form-group">		
+				<h3>User Initiator Information </h3>
+			</div>
+			
+		  	<div class="form-group">
+		    	<label>First Name</label>
+		    	<p><%=data[0].firstname%></p>
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label>Last Name</label>
+		    	<p><%=data[0].lastname%></p>
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label>Phone Number</label>
+		    	<p><%=data[0].phone%></p>
+		  	</div>
+		  	
+		  	<div class="form-group">
+		    	<label>Gender</label>
+		    	<p><%=data[0].gender%></p>
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label>Mailing Address</label>
+		    	<p><%=data[0].mailing_address%></p>
+		  	</div>
+		  	
+		  	<div class="form-group">
+		    	<label>Initiator Reputation</label>
+		    	<p><%=data[0].initiator_reputation%></p>
+		  	</div>	
+		  	
+		  	<td><button class="btn btn-primary" onClick="addInitiatorRep('<%=data[0].id%>')">Add Initiator Reputation</button></td>
+		</form>
+		  		
+		<form class="col-sm-4 control-label" id="funder-user-info-form" method="put" autocomplete="on"> 
+			
+			<div class="form-group">		
+				<h3>User Funder Information </h3>
+			</div>
+			
+		  	<div class="form-group">
+		    	<label>Money</label>
+		    	<p><%=data[0].money%></p>
+		  	</div>
+		  	
+		    <div class="form-group">
+		    	<label>Organization</label>
+		    	<p><%=data[0].organization%></p>
+		  	</div>
+		  			
+		   	<div class="form-group">
+		    	<label>Interest</label>
+		    	<p><%=data[0].interest%></p>
+		  	</div>
+		  	
+		  	<div class="form-group">
+		    	<label>Funder Reputation</label>
+		    	<p><%=data[0].funder_reputation%></p>
+		  	</div>
+		  	
+		  	<td><button class="btn btn-primary" onClick="addFunderRep('<%=data[0].id%>')">Add Funder Reputation</button></td>
+		</form>
+		
+	</div>	
+	
+	<div class="form-group">
+		<table class="table table-hover">
+		    <thead>
+				<tr>
+					<th>Funded Project ID</th>
+					<th>Funded Funded Amount</th>
+					<th>Funded Option</th>
+					<th>Funded Date</th>
+				</tr>
+		    </thead>
+		    <tbody>
+		    	<% for(var i = 0;i < data.length;i++) { %>
+					<tr>
+						<td><a href="/project/<%=data[i].project_id%>"><%=data[i].project_id%></a></td>
+						<td>$<%=data[i].fund_amount%></td>
+						<td><%=data[i].fund_option%></td>
+						<td><%=data[i].fund_date%></td>
+					</tr>
+				<% } %>
+		    </tbody>
+		</table>
+  	</div>
+</div>
+
+<!-- Bootstrapped Footer -->
+<!-- Footer -->
+<% include footer.html %>

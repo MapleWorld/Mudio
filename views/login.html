@@ -1,0 +1,44 @@
+<!--Bootstrapped header -->
+<!-- Header -->
+<% include header.html %>
+
+<!--Bootstrapped nav bar-->
+<!-- Navigation -->
+<% include navbar.html %>
+	
+<div id="login_form">
+
+	<div class="login-page-err-area"></div>
+	
+	<form class="form-horizontal" method="post" id="login-page" autocomplete="on">
+		
+		<div class="form-group">		
+			<h1 class="col-sm-7 control-label">Login Form</h1>
+		</div>
+
+		<div class="form-group">
+	    	<label class="col-sm-5 control-label">User Name</label>
+	    	<div class="col-xs-3">
+	      		<input id="user_name" name="user_name" type="text" class="form-control" placeholder="User Name">
+	    	</div>
+	  	</div>
+	  	
+	  	<div class="form-group">
+	    	<label class="col-sm-5 control-label">Password</label>
+	    	<div class="col-xs-3">
+	      		<input id="password" name="password" type="password" class="form-control" placeholder="Password">
+	    	</div>
+	  	</div>
+
+	  	<div class="form-group">
+	    	<div class="col-sm-offset-6">
+	      		<input type="button" class="btn btn-primary btn-lg" value="Login" onClick="loginUser('#login-page', '.login-page-err-area')"/> 
+	    	</div>
+	  	</div>
+	</form>
+</div>
+
+<!-- Bootstrapped Footer -->
+<!-- Footer -->
+<% include footer.html %>
+
