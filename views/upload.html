@@ -1,0 +1,71 @@
+<!--Bootstrapped header -->
+<!-- Header -->
+<% include header.html %>
+
+<!--Bootstrapped nav bar-->
+<!-- Navigation -->
+<% include navbar.html %>
+
+<div id="upload_form">
+
+	<form class="form-horizontal" id="upload-form" method="post" autocomplete="on"> 
+		
+		<div class="upload-form-err-area"></div>
+		
+		<div class="form-group">		
+			<h1 class="col-sm-7 control-label">Upload Music Form</h1>
+		</div>
+
+		<div class="form-group">
+	    	<label class="col-sm-5 control-label">Music Name</label>
+	    	<div class="col-xs-3">
+	      		<input name="music_name" required="required" type="text" class="form-control" placeholder="Super Cool music" />
+	    	</div>
+	  	</div>
+	  	
+		<div class="form-group">
+	    	<label class="col-sm-5 control-label">Description</label>
+	    	<div class="col-xs-3">
+	      		<textarea name="music_description" required="required" class="form-control" rows="3" placeholder="Information about the music"></textarea>
+	    	</div>
+	  	</div>
+	  	
+	  	<div class="form-group">
+	    	<label class="col-sm-5 control-label">Audio File</label>
+	    	<div class="col-xs-3">
+	      		<textarea name="mmusic_audio" required="required" class="form-control"></textarea>
+	    	</div>
+	  	</div>
+	  	
+	  	<div class="form-group">
+	    	<label class="col-sm-5 control-label">Music Sheet</label>
+	    	<div class="col-xs-3">
+	      		<textarea name="music_sheet" required="required" class="form-control" ></textarea>
+	    	</div>
+	  	</div>
+
+	  	<div class="form-group">
+	    	<label class="col-sm-5 control-label">Instrument Type</label>
+	    	<div class="col-xs-3">
+				<select class="form-control" name="music_instrument">
+					<option value="piano">Piano</option>
+					<option value="violin">Violin</option>
+				  	<option value="cello">Cello</option>
+				  	<option value="guitar">Guitar</option>
+				</select>
+	    	</div>
+	  	</div>
+
+	  	<div class="form-group">
+	    	<div class="col-sm-offset-5">
+	      		<input type="button" class="btn btn-primary btn-lg" value="Upload Music" onClick="uploadMusic('#upload-form', '.upload-form-err-area')"/> 
+	    	</div>
+	  	</div>
+	</form>
+	
+	
+</div>
+
+<!-- Bootstrapped Footer -->
+<!-- Footer -->
+<% include footer.html %>

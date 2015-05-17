@@ -1,13 +1,14 @@
 Priority
 1. Create and design a mysql database that is able to store image file for music sheet and audio file.
-2. A user must provide at least 1 and up to 2 audio files for each music that they are uploading, one that they recorded and the original.
+2. A user must provide at least 1 and up to 2 audio files for each music that they are uploading.
+3. Able to login with their Facebook or google account.
 
 Other Thoughts:
 1. An account is not necessary, anyone can visit and listen to any music.
 2. An account is only needed for community or posting music sheet.
 3. Front end design, not important at the moment.
 
-Database Design:
+Database Design: 
 User:
 id
 username
@@ -20,12 +21,7 @@ name
 owner
 visitor
 rating
-sheet
-audio_file_name
-comment
-type (piano, violin, etc)
+sheets
+audio
+instrument (piano, violin, etc)
 
-Comment:
-id
-owner
-content

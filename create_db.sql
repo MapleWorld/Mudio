@@ -8,24 +8,39 @@
 create table user (
 	-- General Data
 	id int AUTO_INCREMENT PRIMARY KEY,
-	username varchar(40) UNIQUE NOT NULL,
-	password varchar(100) NOT NULL,
+	username varchar(15) UNIQUE NOT NULL,
+	password varchar(20) NOT NULL,
 	created_date datetime NOT NULL,
 	comparable_date int default 0,
 	email varchar(40) UNIQUE NOT NULL,
-	
+
 	firstname varchar(20),
 	lastname varchar(20),
 	phone varchar(20),
 	gender varchar(10),
-	mailing_address varchar(100),
 	user_reputation int default 0,
-	
+
 	-- Admin
 	admin tinyint default 0 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table music(
+	id int AUTO_INCREMENT PRIMARY KEY,
+	name varchar(20) NOT NULL,
+	description varchar(255),
+	audio varchar(25),						-- Rename audio file name to id (prevent duplicate file name)
+	owner int NOT NULL,
+	instrument varchar(15),
+	sheets varchar(255) NOT NULL, 	-- Any format but need to add id to their name before saving
+	vistor int default 0,
+	rating int default 0,
+	created_date datetime NOT NULL,
+	comparable_date int default 0,
+	FOREIGN KEY (owner) references user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
 
+	
 
 	
 	

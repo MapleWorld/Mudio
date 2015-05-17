@@ -51,18 +51,18 @@ var user 			= require('./routes/user');
 var about 			= require('./routes/about');
 var login 			= require('./routes/login');
 var logout			= require('./routes/logout');
+var upload 			= require('./routes/upload');
 var profile			= require('./routes/profile');
 var register 		= require('./routes/register');
-var community 		= require('./routes/community');
 
 app.use('/', home);
 app.use('/', user);
 app.use('/', about);
 app.use('/', login);
 app.use('/', logout);
+app.use('/', upload);
 app.use('/', profile);
 app.use('/', register);
-app.use('/', community);
 
 //var tools = require('./public/js/tools');
 //console.log(tools.currentTime());

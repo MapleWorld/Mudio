@@ -22,23 +22,13 @@ function errorMessage(urlAddress, formID, errorDivID, action){
    });
 }
 
-function fundProject(formID, errorDivID, projectID, funderID, projectCommunity){
-	urlAddress = '/project/fund/' + projectID + "-" + funderID + "-" + projectCommunity;
+function findMusic(formID, errorDivID){
+	urlAddress = '/musics/find';
 	errorMessage(urlAddress, formID, errorDivID, "post");
 }
 
-function findProjects(formID, errorDivID){
-	urlAddress = '/projects/find';
-	errorMessage(urlAddress, formID, errorDivID, "post");
-}
-
-function funderUpdateData(formID, errorDivID){
-	urlAddress = '/funder/update';
-	errorMessage(urlAddress, formID, errorDivID, "put");
-}
-
-function initiatorUpdateData(formID, errorDivID){
-	urlAddress = '/initiator/update';
+function userUpdateData(formID, errorDivID){
+	urlAddress = '/user/update';
 	errorMessage(urlAddress, formID, errorDivID, "put");
 }
 
@@ -52,31 +42,18 @@ function registerUser(formID, errorDivID){
 	errorMessage(urlAddress, formID, errorDivID, "post");
 }
 
-function createProject(formID, errorDivID){
-	urlAddress = '/create_project';
+function uploadMusic(formID, errorDivID){
+	urlAddress = '/upload';
 	errorMessage(urlAddress, formID, errorDivID, "post");
 }
 
-function updateProject(formID, errorDivID, projectId){
-	urlAddress = '/edit_project/' + projectId;
+function updateMusic(formID, errorDivID, musicId){
+	urlAddress = '/edit_music/' + musicId;
 	errorMessage(urlAddress, formID, errorDivID, "put");
 }
 
-function likeProject(projectID){
-	urlAddress = '/like/' + projectID;
-
-	$.ajax({     
-		url: urlAddress,
-		type:"put",
-		success:function(res){
-			window.location = res.redirect;
-			return false;
-		}
-   });
-}
-
-function addFunderRep(userID){
-	urlAddress = '/user/addFunderRep/' + userID;
+function likeMusic(musicID){
+	urlAddress = '/like/' + musicID;
 
 	$.ajax({     
 		url: urlAddress,
@@ -101,9 +78,9 @@ function addInitiatorRep(userID){
    });
 }
 
-function deleteProject(projectID){
+function deleteMusic(musicID){
 	$.ajax({     
-		url: '/delete_project/' + projectID,
+		url: '/delete_music/' + musicID,
 		type:'DELETE',
 		success:function(res){
 			window.location = res.redirect;
