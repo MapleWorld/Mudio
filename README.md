@@ -1,6 +1,8 @@
 # Piano Website
 A social community website that allows people to post, listen, teach, and share music sheet and knowledge.
 
+It provides easy access to various music sheet and audio file to the general public, listen to high quality audio and hopefully, it will inspire and motivate others to learn instrument.
+
 Got the idea from www.gangqinpu.com.
 Personally, I really like this website and it helped me so much when I was first learning piano, it really inspired and motivated me to learn piano.
 
