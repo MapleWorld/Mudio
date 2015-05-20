@@ -19,16 +19,41 @@ router.get('/upload', function(req, res) {
 	}
 });
 
+
+var audio_file_name = 0;
+var music_sheet_file_name = 0;
+var upload_completed = false;
+
+/*Configure the multer.*/
+router.use(multer({ dest: './uploaded/',
+	rename: function (fieldname, filename) {
+		if (fieldname === "music_audio_file"){
+			audio_file_name += 1;
+			return audio_file_name;
+		}else{
+			music_sheet_file_name += 1;
+			return music_sheet_file_name;
+		}
+  	},
+	onFileUploadStart: function (file) {
+  		console.log(file.originalname + ' is uploading ...');
+	},
+	onFileUploadComplete: function (file) {
+  		console.log(file.fieldname + ' uploaded to  ' + file.path);
+		upload_completed = true;
+	}
+}));
+
+
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 
-	console.log(req.files, req.body);
-	
-	if(upload_done == true){
-		console.log(req.files);
+	if(upload_completed == true){
+		console.log("Files uploaded successfully");
+		upload_completed = false;
 	}
-	
-	console.log("Over");
+	//res.send({redirect: 'upload'});
+
 	// Validation
 	/*
 	req.assert('music_name', 'Music name is required').notEmpty();

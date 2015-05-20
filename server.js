@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressValidator());
 app.use(cookieParser('secretString'));
-app.use(multer({dest:'../uploaded/'}));
 
 app.use(session({
 	cookieName: "session",
