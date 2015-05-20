@@ -22,6 +22,11 @@ function errorMessage(urlAddress, formID, errorDivID, action){
    });
 }
 
+function more_upload_button(){
+	var more_upload = '<input type="file" name="music_sheet_file" size="40" class="form-control-static">';
+	$("#more_music_sheet").append(more_upload);    
+}
+
 function findMusic(formID, errorDivID){
 	urlAddress = '/musics/find';
 	errorMessage(urlAddress, formID, errorDivID, "post");

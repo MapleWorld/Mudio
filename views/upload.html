@@ -29,18 +29,23 @@
 	      		<textarea name="music_description" required="required" class="form-control" rows="3" placeholder="Information about the music"></textarea>
 	    	</div>
 	  	</div>
-	  	
+	  			
 	  	<div class="form-group">
 	    	<label class="col-sm-5 control-label">Audio File</label>
 	    	<div class="col-xs-3">
-	      		<textarea name="mmusic_audio" required="required" class="form-control"></textarea>
+	      		<input type="file" name="audio_file" size="40" name="music_audio" required="required" class="form-control-static">
 	    	</div>
 	  	</div>
 	  	
 	  	<div class="form-group">
 	    	<label class="col-sm-5 control-label">Music Sheet</label>
 	    	<div class="col-xs-3">
-	      		<textarea name="music_sheet" required="required" class="form-control" ></textarea>
+	      		<div id="more_music_sheet">
+					<input type="file" name="music_sheet_file" size="40" required="required" class="form-control-static">
+				</div>
+				
+				<input type="button" value="More" onClick="more_upload_button()"/> 
+				
 	    	</div>
 	  	</div>
 
