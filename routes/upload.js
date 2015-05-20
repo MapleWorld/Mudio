@@ -1,13 +1,14 @@
 var express 			= require('express');
 var multer     			= require('multer');
-var upload_done  		= false;
 var router 				= express.Router();
+var upload_done  		= false;
+
 // Include external javascript functions 
 var tools 				= require('../public/js/tools');
 
-app.use(multer({ dest: './uploads/',
+router.use(multer({ dest: '../uploaded/',
 	rename: function (fieldname, filename) {
-    	return filename+Date.now();
+    	return filename + Date.now();
   	},
 	onFileUploadStart: function (file) {
 	  	console.log(file.originalname + ' is starting ...');
@@ -31,13 +32,20 @@ router.get('/upload', function(req, res) {
 	}
 });
 
-
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 
+	console.log(req.files, req.body);
+	
+	if(upload_done == true){
+		console.log(req.files);
+	}
+	
+	console.log("Over");
 	// Validation
+	/*
 	req.assert('music_name', 'Music name is required').notEmpty();
-	req.assert('music_description','Music Description is required').isEmail();
+	req.assert('music_description','Music Description is required').notEmpty();
 
 	var errors = req.validationErrors();
 
@@ -45,16 +53,11 @@ router.post('/upload', function (req, res) {
 		res.status(422).json(errors);
 		return;
 	}
-
-	if(upload_done == true){
-		console.log(req.files);
-	}
-
-	/* EMAIL AND USERNAME MUST BE UNIQUE */
+	
 	// Get data
 	var data = {
 		name			: req.body.music_name,
-		drescription	: req.body.music_descrition,
+		description	: req.body.music_description,
 		audio			: req.body.music_audio,
 		sheets			: req.body.music_sheets,
 		instrument		: req.body.music_instrument,
@@ -62,8 +65,6 @@ router.post('/upload', function (req, res) {
 		comparable_date	: tools.currentTime()[1]
 	};
 
-	// Inserting into MySQL
-	/*
 	req.getConnection(function (err, conn) {
 
 		if (err){

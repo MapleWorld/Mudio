@@ -12,7 +12,7 @@ onFileUploadStart: function (file) {
 },
 onFileUploadComplete: function (file) {
   console.log(file.fieldname + ' uploaded to  ' + file.path);
-  done=true;
+  upload_done=true;
 }
 }));
 
