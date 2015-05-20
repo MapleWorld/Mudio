@@ -22,9 +22,14 @@ function errorMessage(urlAddress, formID, errorDivID, action){
    });
 }
 
-function more_upload_button(){
-	var more_upload = '<input type="file" name="music_sheet_file" size="40" class="form-control-static">';
+function more_sheet_upload_button(){
+	var more_upload = '<input type="file" name="music_sheet_files" size="40" class="form-control-static">';
 	$("#more_music_sheet").append(more_upload);    
+}
+
+function more_audio_upload_button(){
+	var more_upload = '<input type="file" name="music_audio_files" size="40" class="form-control-static">';
+	$("#more_audio_sheet").append(more_upload);    
 }
 
 function findMusic(formID, errorDivID){

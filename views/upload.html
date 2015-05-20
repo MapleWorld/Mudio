@@ -33,7 +33,11 @@
 	  	<div class="form-group">
 	    	<label class="col-sm-5 control-label">Audio File</label>
 	    	<div class="col-xs-3">
-	      		<input type="file" name="music_audio_file" size="40" name="music_audio" required="required" class="form-control-static">
+		    	<div id="more_audio_sheet">
+		      		<input type="file" name="music_audio_files" size="40" required="required" class="form-control-static">
+		    	</div>
+		    	
+		    	<input type="button" value="More" onClick="more_audio_upload_button()"/> 
 	    	</div>
 	  	</div>
 	  	
@@ -41,11 +45,10 @@
 	    	<label class="col-sm-5 control-label">Music Sheet</label>
 	    	<div class="col-xs-3">
 	      		<div id="more_music_sheet">
-					<input type="file" name="music_sheet_file" size="40" required="required" class="form-control-static">
+					<input type="file" name="music_sheet_files" size="40" required="required" class="form-control-static">
 				</div>
 				
-				<input type="button" value="More" onClick="more_upload_button()"/> 
-				
+				<input type="button" value="More" onClick="more_sheet_upload_button()"/> 	
 	    	</div>
 	  	</div>
 

@@ -27,7 +27,7 @@ var upload_completed = false;
 /*Configure the multer.*/
 router.use(multer({ dest: './uploaded/',
 	rename: function (fieldname, filename) {
-		if (fieldname === "music_audio_file"){
+		if (fieldname === "music_audio_files"){
 			audio_file_name += 1;
 			return audio_file_name;
 		}else{
@@ -52,10 +52,21 @@ router.post('/upload', function (req, res) {
 		console.log("Files uploaded successfully");
 		upload_completed = false;
 	}
-	//res.send({redirect: 'upload'});
+	var files_fieldname = [];
+	var files_name = [];
+	var files_path = [];
+	var fileKeys = Object.keys(req.files);
+	
+	console.log(req.files);
+	req.files["music_sheet_files"];
+	
+	fileKeys.forEach(function(key) {
+	    files_fieldname.push(req.files[key].fieldname);
+	    files_name.push(req.files[key].name);
+	    files_path.push(req.files[key].path);
+	});
 
-	// Validation
-	/*
+	// Validation	
 	req.assert('music_name', 'Music name is required').notEmpty();
 	req.assert('music_description','Music Description is required').notEmpty();
 
@@ -67,16 +78,29 @@ router.post('/upload', function (req, res) {
 	}
 	
 	// Get data
-	var data = {
+	var music_data = [];
+	var audio_size = 0;
+	for (var i = 0; i < files_fieldname.length; i++){
+		if (fileKeys[1] === files_fieldname[i]){
+			audio_size += 1;
+		}
+		
+	}
+	console.log(audio_size, fileKeys,files_fieldname);
+	
+	music_data = {
+		owner			: 1,
 		name			: req.body.music_name,
-		description	: req.body.music_description,
-		audio			: req.body.music_audio,
-		sheets			: req.body.music_sheets,
+		description		: req.body.music_description,
+		audio			: files_path,
+		sheets			: files_path,
 		instrument		: req.body.music_instrument,
 		created_date 	: tools.currentTime()[0],
 		comparable_date	: tools.currentTime()[1]
 	};
 
+	console.log(music_data);
+	/*
 	req.getConnection(function (err, conn) {
 
 		if (err){
