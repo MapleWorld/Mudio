@@ -1,5 +1,6 @@
 var path      			= require('path');
 var mysql 				= require('mysql');
+var multer     			= require('multer');
 var express  			= require('express');
 var bodyParser 			= require('body-parser');
 var cookieParser 		= require('cookie-parser');
@@ -19,8 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressValidator());
-
 app.use(cookieParser('secretString'));
+app.use(multer({dest:'../uploaded/'}));
+
 app.use(session({
 	cookieName: "session",
 	duration: 30 * 60 * 1000,
