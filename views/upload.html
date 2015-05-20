@@ -8,7 +8,7 @@
 
 <div id="upload_form">
 
-	<form class="form-horizontal" id="upload-form" method="post" autocomplete="on"> 
+	<form class="form-horizontal" id="upload-form" enctype="multipart/form-data" action="/upload" method="post" autocomplete="on"> 
 		
 		<div class="upload-form-err-area"></div>
 		
@@ -33,7 +33,7 @@
 	  	<div class="form-group">
 	    	<label class="col-sm-5 control-label">Audio File</label>
 	    	<div class="col-xs-3">
-	      		<input type="file" name="audio_file" size="40" name="music_audio" required="required" class="form-control-static">
+	      		<input type="file" name="music_audio_file" size="40" name="music_audio" required="required" class="form-control-static">
 	    	</div>
 	  	</div>
 	  	

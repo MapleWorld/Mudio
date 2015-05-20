@@ -1,7 +1,22 @@
-var express = require('express');
-var router = express.Router();
+var express 			= require('express');
+var multer     			= require('multer');
+var upload_done  		= false;
+var router 				= express.Router();
 // Include external javascript functions 
-var tools = require('../public/js/tools');
+var tools 				= require('../public/js/tools');
+
+app.use(multer({ dest: './uploads/',
+	rename: function (fieldname, filename) {
+    	return filename+Date.now();
+  	},
+	onFileUploadStart: function (file) {
+	  	console.log(file.originalname + ' is starting ...');
+	},
+	onFileUploadComplete: function (file) {
+	  	console.log(file.fieldname + ' uploaded to  ' + file.path);
+	  	upload_done=true;
+	}
+}));
 
 router.get('/upload', function(req, res) {
 
@@ -31,6 +46,10 @@ router.post('/upload', function (req, res) {
 		return;
 	}
 
+	if(upload_done == true){
+		console.log(req.files);
+	}
+
 	/* EMAIL AND USERNAME MUST BE UNIQUE */
 	// Get data
 	var data = {
@@ -44,6 +63,7 @@ router.post('/upload', function (req, res) {
 	};
 
 	// Inserting into MySQL
+	/*
 	req.getConnection(function (err, conn) {
 
 		if (err){
@@ -68,7 +88,7 @@ router.post('/upload', function (req, res) {
 		});
 
 	});
-
+	*/
 });
 
 module.exports = router;
