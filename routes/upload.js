@@ -2,7 +2,6 @@ var express 			= require('express');
 var multer     			= require('multer');
 var router 				= express.Router();
 var upload_done  		= false;
-var app 				= express();
 // Include external javascript functions 
 var tools 				= require('../public/js/tools');
  
