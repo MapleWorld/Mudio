@@ -57,7 +57,6 @@ router.post('/register', function (req, res) {
 			//"INSERT INTO user SET ? ", data
 			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
 			//var stmt = conn.prepareSync("INSERT INTO TESTING (name) VALUES (?)");
-			
 			conn.prepare("INSERT INTO TESTING (name) VALUES (?)", function (err, stmt) {			    
     
 				if (err) {			
