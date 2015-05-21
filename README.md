@@ -1,6 +1,6 @@
 # Piano Website
 
-Got the idea from www.gangqinpu.com.
+Got the idea from www.gangqinpu.com
 
 A social community website that allows people to post, listen, teach, and share music, audio, and knowledge.
 
