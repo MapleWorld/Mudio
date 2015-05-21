@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+/*require the ibm_db module*/
+var ibmdb = require('ibm_db');
 // Include external javascript functions 
 var tools = require('../public/js/tools');
 
@@ -39,32 +41,40 @@ router.post('/register', function (req, res) {
 		comparable_date: tools.currentTime()[1]
 	};
 
-	// Inserting into MySQL
-	req.getConnection(function (err, conn) {
-
-		if (err){
-			console.log(err);
-			return next("Cannot Connect");
-		}
-
-		var query = conn.query("INSERT INTO user SET ? ", data, function (err, rows) {
-
-			if (err) {
-			
-				var register_error = {
-					msg: err.code
-				};
+	console.log("Test program to access DB2 sample database");
 	
-				res.status(422).json([register_error]);
-				return ;
-			}
-			
-			req.flash('notif', 'You have successfully created an account');
-			res.send({redirect: '/'});
-		});
+	/*Connect to the database server
+	  param 1: The DSN string which has the details of database name to connect to, user id, password, hostname, portnumber 
+	  param 2: The Callback function to execute when connection attempt to the specified database is completed
+	*/
+	ibmdb.open("DRIVER={DB2};DATABASE=SAMPLE;UID=Maple;PWD=Lonely110;HOSTNAME=localhost;port=50000", function(err, conn){
+        if(err) {
+          	console.error("error: ", err.message);
+        } else {
 
+			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
+			//conn.query("INSERT INTO user SET ? ", data, function (err, rows) {
+			//"INSERT INTO user SET ? ", data
+			conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
+	
+				if (err) {			
+					console.log("error sucker");
+					var register_error = {
+						msg: err.code
+					};
+					res.status(422).json([register_error]);
+					return ;
+				}
+				
+				conn.close(function(){
+					console.log("Connection Closed");
+				});
+				
+				req.flash('notif', 'You have successfully created an account');
+				res.send({redirect: '/'});
+			});
+		}
 	});
-
 });
 
 module.exports = router;
