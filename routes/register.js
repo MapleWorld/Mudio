@@ -55,26 +55,42 @@ router.post('/register', function (req, res) {
 			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
 			//conn.query("INSERT INTO user SET ? ", data, function (err, rows) {
 			//"INSERT INTO user SET ? ", data
-			conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
-	
+			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
+			//var stmt = conn.prepareSync("INSERT INTO TESTING (name) VALUES (?)");
+			
+			conn.prepare("INSERT INTO TESTING (name) VALUES (?)", function (err, stmt) {			    
+    
 				if (err) {			
 					console.log("error sucker");
 					var register_error = {
 						msg: err.code
 					};
 					res.status(422).json([register_error]);
-					return ;
+					return conn.closeSync();
 				}
-				
-				conn.close(function(){
-					console.log("Connection Closed");
+				//Bind and Execute the statment asynchronously
+    			stmt.execute([data.username], function (err, result) {
+      				result.closeSync();
+
+      				//Close the connection
+      				conn.close(function(err){});
+					req.flash('notif', 'You have successfully created an account');
+					res.send({redirect: '/'});
 				});
-				
-				req.flash('notif', 'You have successfully created an account');
-				res.send({redirect: '/'});
 			});
 		}
 	});
 });
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
