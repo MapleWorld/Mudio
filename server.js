@@ -1,5 +1,6 @@
 var path      			= require('path');
 var mysql 				= require('mysql');
+var multer     			= require('multer');
 var express  			= require('express');
 var bodyParser 			= require('body-parser');
 var cookieParser 		= require('cookie-parser');
@@ -19,8 +20,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(expressValidator());
-
 app.use(cookieParser('secretString'));
+
 app.use(session({
 	cookieName: "session",
 	duration: 30 * 60 * 1000,
@@ -37,7 +38,6 @@ app.use(flash());
 /* Comment this part if don't have database install'*/
 app.use(connection(mysql,{
 	host     : 'localhost',
-	//host     : 'communityfund.cazlh4nyhwx5.us-east-1.rds.amazonaws.com',
 	database : 'piano',
 	user     : 'root',
 	password : 'root'
@@ -64,10 +64,8 @@ app.use('/', upload);
 app.use('/', profile);
 app.use('/', register);
 
-//var tools = require('./public/js/tools');
-//console.log(tools.currentTime());
-	
-//start Server
+
+// Start Server
 var server = app.listen(8080,function(){
    console.log("Listening to port %s",server.address().port);
 });
