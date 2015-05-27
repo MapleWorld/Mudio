@@ -40,8 +40,6 @@ router.post('/register', function (req, res) {
 		created_date : tools.currentTime()[0],
 		comparable_date: tools.currentTime()[1]
 	};
-
-	console.log("Test program to access DB2 sample database");
 	
 	/*Connect to the database server
 	  param 1: The DSN string which has the details of database name to connect to, user id, password, hostname, portnumber 
@@ -70,7 +68,14 @@ router.post('/register', function (req, res) {
 				//Bind and Execute the statment asynchronously
     			stmt.execute([data.username], function (err, result) {
       				result.closeSync();
-
+      				
+      				// Check for query error
+					if (err) {
+					  	console.error("error: ", err.message);
+					  	res.status(422).json([{msg:err.message}]);
+						return ;
+					}
+				
       				//Close the connection
       				conn.close(function(err){});
 					req.flash('notif', 'You have successfully created an account');

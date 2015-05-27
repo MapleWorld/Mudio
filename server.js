@@ -34,17 +34,6 @@ app.use(session({
 ));
 app.use(flash());
 
-/*MySql connection*/
-/* Comment this part if don't have database install'*/
-app.use(connection(mysql,{
-	host     : 'localhost',
-	//host     : 'communityfund.cazlh4nyhwx5.us-east-1.rds.amazonaws.com',
-	database : 'piano',
-	user     : 'root',
-	password : 'root'
-    },'request')
-);
-
 // Routes	
 var router 			= express.Router();
 var home 			= require('./routes/home');
