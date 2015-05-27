@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-/*require the ibm_db module*/
-var ibmdb = require('ibm_db');
 // Include external javascript functions 
 var tools = require('../public/js/tools');
 
@@ -41,20 +39,33 @@ router.post('/register', function (req, res) {
 		comparable_date: tools.currentTime()[1]
 	};
 	
-	/*Connect to the database server
-	  param 1: The DSN string which has the details of database name to connect to, user id, password, hostname, portnumber 
-	  param 2: The Callback function to execute when connection attempt to the specified database is completed
-	*/
+	// Inserting into MySQL
+	req.getConnection(function (err, conn) {
+
+		if (err){
+			console.log(err);
+			res.status(422).json([{msg:err.message}]);
+			return next("Cannot Connect");
+		}
+
+		var query = conn.query("INSERT INTO user SET ? ", data, function (err, rows) {
+
+			if (err) {
+				res.status(422).json([{msg:err.message}]);
+				return ;
+			}
+			
+			req.flash('notif', 'You have successfully created an account');
+			res.send({redirect: '/'});
+		});
+
+	});
+	
+	/*
 	ibmdb.open("DRIVER={DB2};DATABASE=SAMPLE;UID=Maple;PWD=Lonely110;HOSTNAME=localhost;port=50000", function(err, conn){
         if(err) {
           	console.error("error: ", err.message);
         } else {
-
-			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
-			//conn.query("INSERT INTO user SET ? ", data, function (err, rows) {
-			//"INSERT INTO user SET ? ", data
-			//conn.query("INSERT INTO TESTING (name) values('" + data.username + "')", function(err, rows) {
-			//var stmt = conn.prepareSync("INSERT INTO TESTING (name) VALUES (?)");
 			conn.prepare("INSERT INTO TESTING (name) VALUES (?)", function (err, stmt) {			    
     
 				if (err) {			
@@ -65,7 +76,6 @@ router.post('/register', function (req, res) {
 					res.status(422).json([register_error]);
 					return conn.closeSync();
 				}
-				//Bind and Execute the statment asynchronously
     			stmt.execute([data.username], function (err, result) {
       				result.closeSync();
       				
@@ -75,8 +85,6 @@ router.post('/register', function (req, res) {
 					  	res.status(422).json([{msg:err.message}]);
 						return ;
 					}
-				
-      				//Close the connection
       				conn.close(function(err){});
 					req.flash('notif', 'You have successfully created an account');
 					res.send({redirect: '/'});
@@ -84,6 +92,7 @@ router.post('/register', function (req, res) {
 			});
 		}
 	});
+	*/
 });
 
 module.exports = router;

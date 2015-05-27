@@ -49,7 +49,6 @@ router.post('/upload', function (req, res) {
 	/*
 	req.assert('music_name', 'Music name is required').notEmpty();
 	req.assert('music_description','Music Description is required').notEmpty();
-
 	var errors = req.validationErrors();
 
 	if (errors) {
@@ -100,18 +99,14 @@ router.post('/upload', function (req, res) {
 
 		if (err){
 			console.log(err);
+			res.status(422).json([msg:err.code]);
 			return next("Cannot Connect");
 		}
 
 		var query = conn.query("INSERT INTO music SET ? ", data, function (err, rows) {
 
 			if (err) {
-			
-				var upload_error = {
-					msg: err.code
-				};
-	
-				res.status(422).json([upload_error]);
+				res.status(422).json([msg:err.code]);
 				return ;
 			}
 			

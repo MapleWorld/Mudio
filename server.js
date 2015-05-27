@@ -34,6 +34,16 @@ app.use(session({
 ));
 app.use(flash());
 
+/*MySql connection*/
+/* Comment this part if don't have database install'*/
+app.use(connection(mysql,{
+	host     : 'localhost',
+	database : 'piano',
+	user     : 'root',
+	password : 'root'
+    },'request')
+);
+
 // Routes	
 var router 			= express.Router();
 var home 			= require('./routes/home');
@@ -54,10 +64,8 @@ app.use('/', upload);
 app.use('/', profile);
 app.use('/', register);
 
-//var tools = require('./public/js/tools');
-//console.log(tools.currentTime());
-	
-//start Server
+
+// Start Server
 var server = app.listen(8080,function(){
    console.log("Listening to port %s",server.address().port);
 });
