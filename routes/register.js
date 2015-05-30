@@ -58,52 +58,7 @@ router.post('/register', function (req, res) {
 			req.flash('notif', 'You have successfully created an account');
 			res.send({redirect: '/'});
 		});
-
 	});
-	
-	/*
-	ibmdb.open("DRIVER={DB2};DATABASE=SAMPLE;UID=Maple;PWD=Lonely110;HOSTNAME=localhost;port=50000", function(err, conn){
-        if(err) {
-          	console.error("error: ", err.message);
-        } else {
-			conn.prepare("INSERT INTO TESTING (name) VALUES (?)", function (err, stmt) {			    
-    
-				if (err) {			
-					console.log("error sucker");
-					var register_error = {
-						msg: err.code
-					};
-					res.status(422).json([register_error]);
-					return conn.closeSync();
-				}
-    			stmt.execute([data.username], function (err, result) {
-      				result.closeSync();
-      				
-      				// Check for query error
-					if (err) {
-					  	console.error("error: ", err.message);
-					  	res.status(422).json([{msg:err.message}]);
-						return ;
-					}
-      				conn.close(function(err){});
-					req.flash('notif', 'You have successfully created an account');
-					res.send({redirect: '/'});
-				});
-			});
-		}
-	});
-	*/
 });
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-

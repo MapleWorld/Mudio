@@ -8,14 +8,14 @@
 create table user (
 	-- General Data
 	id int AUTO_INCREMENT PRIMARY KEY,
-	username varchar(15) UNIQUE NOT NULL,
+	username varchar(50) UNIQUE NOT NULL,
 	password varchar(20) NOT NULL,
 	created_date datetime NOT NULL,
 	comparable_date int default 0,
-	email varchar(40) UNIQUE NOT NULL,
+	email varchar(100) UNIQUE NOT NULL,
 
-	firstname varchar(20),
-	lastname varchar(20),
+	firstname varchar(50),
+	lastname varchar(50),
 	phone varchar(20),
 	gender varchar(10),
 	user_reputation int default 0,
@@ -26,11 +26,11 @@ create table user (
 
 create table music(
 	id int AUTO_INCREMENT PRIMARY KEY,
-	name varchar(20) NOT NULL,
+	name varchar(255) NOT NULL,
 	description varchar(255),
-	audio varchar(25),						-- Rename audio file name to id (prevent duplicate file name)
+	audio varchar(255),						-- Rename audio file name to id (prevent duplicate file name)
 	owner int NOT NULL,
-	instrument varchar(15),
+	instrument varchar(255),
 	sheets varchar(255) NOT NULL, 	-- Any format but need to add id to their name before saving
 	vistor int default 0,
 	rating int default 0,

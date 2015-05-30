@@ -29,12 +29,12 @@ router.use(multer({ dest: './uploaded/',
 	}
 }));
 
+
 router.get('/upload', function(req, res) {
 
 	if (req.session.authenticated){
 		res.render('upload', {notif: req.flash('notif'),
 			auth: req.session.authenticated,
-			data:rows,
 			admin: req.session.data.admin});	
 	}else{
 		res.render('upload', {notif: req.flash('notif'),
@@ -46,7 +46,6 @@ router.get('/upload', function(req, res) {
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 	// Validation	
-	/*
 	req.assert('music_name', 'Music name is required').notEmpty();
 	req.assert('music_description','Music Description is required').notEmpty();
 	var errors = req.validationErrors();
@@ -55,15 +54,17 @@ router.post('/upload', function (req, res) {
 		res.status(422).json(errors);
 		return;
 	}
-	*/
 	
-	if(upload_completed == true){
+	
+	if (upload_completed == true){
 		console.log("Files uploaded successfully");
 		upload_completed = false;
 	}
 
-	var file_data_JSON = [];
 	var fileKeys = Object.keys(req.files);
+	var file_data_JSON = [];
+	var audio_files = "";
+	var sheet_files = "";
 	var audio_size = 1;
 	var sheet_size = 1;
 	
@@ -81,41 +82,46 @@ router.post('/upload', function (req, res) {
 			file_data_JSON.push(req.files[key]);
 		}
 	});
-
+	
+	for (var i = 0; i < audio_size; i++){
+		audio_files += file_data_JSON.slice(0,audio_size)[i].path + ",";
+	};
+	
+	for (var i = 0; i < sheet_size; i++){
+		sheet_files += file_data_JSON.slice(audio_size, audio_size + sheet_size)[i].path + ",";
+	};
+	
 	music_data = {
-		owner			: 1,
+		owner			: "1",
 		name			: req.body.music_name,
 		description		: req.body.music_description,
-		audio			: file_data_JSON.slice(0,audio_size),
-		sheets			: file_data_JSON.slice(audio_size, audio_size + sheet_size),
+		audio			: audio_files,
+		sheets			: sheet_files,
 		instrument		: req.body.music_instrument,
 		created_date 	: tools.currentTime()[0],
 		comparable_date	: tools.currentTime()[1]
 	};
 
-	console.log(music_data);
-	/*
 	req.getConnection(function (err, conn) {
 
 		if (err){
 			console.log(err);
-			res.status(422).json([msg:err.code]);
-			return next("Cannot Connect");
+			res.status(422).json([{msg:err.code}]);
+			return ;
 		}
 
-		var query = conn.query("INSERT INTO music SET ? ", data, function (err, rows) {
+		var query = conn.query("INSERT INTO music SET ? ", music_data, function (err, rows) {
 
 			if (err) {
-				res.status(422).json([msg:err.code]);
+				console.log(music_data);
+				res.status(422).json([{msg:err.code}]);
 				return ;
 			}
 			
 			req.flash('notif', 'You have successfully uploaded the music');
 			res.send({redirect: '/'});
 		});
-
 	});
-	*/
 });
 
 module.exports = router;

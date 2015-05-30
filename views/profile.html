@@ -32,22 +32,6 @@
 					</tr>
 			    </thead>
 			    <tbody>
-					<% for(var i = 0;i < data.length;i++) { %>
-						<tr>
-							<td><%=data[i].p_id%></td>
-							<td><%=data[i].name%></td>
-							<td><%=data[i].description%></td>
-							<td><%=data[i].community%></td>
-							<td><%=data[i].created_date%></td>
-							<td><%=data[i].likes%></td>
-							<td><%=data[i].initiator_id%></td>
-							<td>
-								<a class="project-view" href="/project/<%=data[i].p_id%>">View</a>
-				            	<a class="project-edit" href="/edit_project/<%=data[i].p_id%>">Edit</a>
-				            	<a class="project-delete" onClick="deleteProject(<%=data[i].p_id%>)">Delete</a>
-				        	</td>
-						</tr>
-					<% } %>
 			    </tbody>
 			</table>
 		</div>

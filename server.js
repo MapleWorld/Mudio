@@ -38,7 +38,7 @@ app.use(flash());
 /* Comment this part if don't have database install'*/
 app.use(connection(mysql,{
 	host     : 'localhost',
-	database : 'piano',
+	database : 'music',
 	user     : 'root',
 	password : 'root'
     },'request')
