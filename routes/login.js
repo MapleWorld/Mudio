@@ -8,7 +8,8 @@ router.get('/login', function (req, res) {
     	res.redirect('/');
     	return ;
     }
-	res.render('login', {notif: req.flash('notif')});
+	res.render('login', {notif: req.flash('notif'),
+							auth: req.session.authenticated});
 });
 
 // Post login data to database
