@@ -18,7 +18,7 @@ router.get('/music/:music_id', function(req, res, next) {
 			return next("Cannot Connect");
 		}
 
-		var query = conn.query("SELECT * FROM music WHERE music.p_id = ? ",[music_id], function(err,rows){
+		var query = conn.query("SELECT * FROM music WHERE music.id = ? ",[music_id], function(err,rows){
 
 			if(err){
 				console.log(err);
