@@ -66,13 +66,10 @@ app.use('/', upload);
 app.use('/', profile);
 app.use('/', register);
 
-
 // Start Server
 var server = app.listen(8080,function(){
    console.log("Listening to port %s",server.address().port);
 });
-
-
 
 
 
