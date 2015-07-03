@@ -54,9 +54,22 @@ router.post('/register', function (req, res) {
 				res.status(422).json([{msg:err.message}]);
 				return ;
 			}
-			
-			req.flash('notif', 'You have successfully created an account');
-			res.send({redirect: '/'});
+
+			// Check with data in MySQL
+			var sql = 'SELECT * FROM user WHERE username  =' + 
+						conn.escape(data.username) + ' and password=' + conn.escape(data.password);
+						
+			conn.query(sql, function(err, rows) {
+				if (err) {
+					console.log(err);
+					res.status(422).json([{msg:err.message}]);
+				}
+				
+				req.session.data = rows[0];
+	            req.session.authenticated = true;
+				req.flash('notif', 'You have successfully created an account');
+				res.send({redirect: '/profile'});
+			});
 		});
 	});
 });
