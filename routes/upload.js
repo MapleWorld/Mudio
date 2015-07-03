@@ -1,5 +1,6 @@
 var express 			= require('express');
 var multer     			= require('multer');
+var fs 					= require('fs');
 var router 				= express.Router();
 var upload_done  		= false;
 // Include external javascript functions 
@@ -7,7 +8,6 @@ var tools 				= require('../public/js/tools');
  
 var audio_file_name = 0;
 var music_sheet_file_name = 0;
-var start_uploading = false;
 var upload_completed = false;
 
 /*Configure the multer.*/
@@ -22,12 +22,7 @@ router.use(multer({ dest: './uploaded/',
 		}
   	},
 	onFileUploadStart: function (file) {
-		if (start_uploading){
-  			console.log(file.originalname + ' is uploading ...');
-  		}else{
-  			console.log("Do not upload file yet.");
-  			return false;
-  		}
+  		console.log(file.originalname + ' is uploading ...');
 	},
 	onFileUploadComplete: function (file) {
   		console.log(file.fieldname + ' uploaded to  ' + file.path);
@@ -49,8 +44,6 @@ router.get('/upload', function(req, res) {
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 
-	start_uploading = false;
-
 	// Validation	
 	req.assert('music_name', 'Music name is required').notEmpty();
 	req.assert('music_description','Music Description is required').notEmpty();
@@ -68,8 +61,8 @@ router.post('/upload', function (req, res) {
 
 	var fileKeys = Object.keys(req.files);
 	var file_data_JSON = [];
-	var audio_files = "";
-	var sheet_files = "";
+	var audio_files = [];
+	var sheet_files = [];
 	var audio_size = 1;
 	var sheet_size = 1;
 	
@@ -88,12 +81,15 @@ router.post('/upload', function (req, res) {
 		}
 	});
 		
+	var audio_files_JSON = file_data_JSON.slice(0,audio_size);
 	for (var i = 0; i < audio_size; i++){
-		audio_files += file_data_JSON.slice(0,audio_size)[i].path + ",";
+		console.log(audio_files_JSON);
+		audio_files.push(audio_files_JSON[i].path);
 	};
 	
+	var sheet_files_JSON = file_data_JSON.slice(audio_size, audio_size + sheet_size);
 	for (var i = 0; i < sheet_size; i++){
-		sheet_files += file_data_JSON.slice(audio_size, audio_size + sheet_size)[i].path + ",";
+		sheet_files.push(sheet_files_JSON[i].path);
 	};
 	
 	music_data = {
@@ -106,7 +102,7 @@ router.post('/upload', function (req, res) {
 		created_date 	: tools.currentTime()[0],
 		comparable_date	: tools.currentTime()[1]
 	};
-	
+
 	req.getConnection(function (err, conn) {
 
 		if (err){
@@ -117,13 +113,16 @@ router.post('/upload', function (req, res) {
 
 		var query = conn.query("INSERT INTO music SET ? ", music_data, function (err, rows) {
 			if (err) {
-				console.log(music_data);
+				console.log("Error", err);
+				for (var i = 0; i < audio_files.length; i++){
+					fs.unlink(audio_files[i]);
+					fs.unlink(sheet_files[i]);
+				}
 				res.status(422).json([{msg:err.code}]);
 				return ;
 			}
-			start_uploading = true;
 			req.flash('notif', 'You have successfully uploaded the music');
-			res.send({redirect: '/'});
+			//res.send({redirect: '/'});
 		});
 	});
 	
