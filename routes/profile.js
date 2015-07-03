@@ -16,7 +16,7 @@ router.get('/profile', function(req, res) {
 				return next("Cannot Connect");
 			}
 			
-			var sql = 'SELECT * FROM project WHERE initiator_id  =' + 
+			var sql = 'SELECT * FROM music WHERE owner  =' + 
 						conn.escape(req.session.data.id);
 						
 			conn.query(sql, function(err, rows) {
