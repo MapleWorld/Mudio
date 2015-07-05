@@ -11,7 +11,24 @@ var music_sheet_file_name = 0;
 var upload_completed = false;
 
 /*Configure the multer.*/
-router.use(multer({ dest: './uploaded/',
+router.use(multer({ 
+	dest: './uploaded/',
+	changeDest: function(dest, req, res) {
+		var stat = null;
+		var new_path = dest + req.session.data.id;
+		try {
+			// using fs.statSync; NOTE that fs.existsSync is now deprecated; fs.accessSync could be used but is only nodejs >= v0.12.0
+		  	stat = fs.statSync(new_path);
+		} catch(err) {
+		  	// for nested folders, look at npm package "mkdirp"
+		  	fs.mkdirSync(new_path);
+		}
+		if (stat && !stat.isDirectory()) {
+		  	// Woh! This file/link/etc already exists, so isn't a directory. Can't save in it. Handle appropriately.
+		  	throw new Error('Directory cannot be created because an inode of a different type exists at "' + new_path + '"');
+		}
+		return new_path;
+	},
 	rename: function (fieldname, filename) {
 		if (fieldname === "music_audio_files"){
 			audio_file_name += 1;
