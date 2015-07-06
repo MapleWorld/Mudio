@@ -61,20 +61,9 @@ router.get('/upload', function(req, res) {
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 
-	// Validation	
-	req.assert('music_name', 'Music name is required').notEmpty();
-	req.assert('music_description','Music Description is required').notEmpty();
-	var errors = req.validationErrors();
-
-	if (errors) {
-		res.status(422).json(errors);
-		console.log(req.body);
-		return;
-	}
-	
 	if (upload_completed == true){
 		upload_completed = false;
-	
+
 		var fileKeys = Object.keys(req.files);
 		var file_data_JSON = [];
 		var audio_files = [];
