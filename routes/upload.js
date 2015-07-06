@@ -52,7 +52,7 @@ router.get('/upload', function(req, res) {
 		res.render('upload', {notif: req.flash('notif'),
 			auth: req.session.authenticated,
 			admin: req.session.data.admin});	
-	}else{
+	} else {
 		res.render('login', {notif: req.flash('notif'),
 			auth: req.session.authenticated});	
 	}
@@ -61,19 +61,9 @@ router.get('/upload', function(req, res) {
 //post data to DB | POST
 router.post('/upload', function (req, res) {
 
-	// Validation	
-	req.assert('music_name', 'Music name is required').notEmpty();
-	req.assert('music_description','Music Description is required').notEmpty();
-	var errors = req.validationErrors();
-
-	if (errors) {
-		res.status(422).json(errors);
-		return;
-	}
-	
 	if (upload_completed == true){
 		upload_completed = false;
-	
+
 		var fileKeys = Object.keys(req.files);
 		var file_data_JSON = [];
 		var audio_files = [];
@@ -97,7 +87,6 @@ router.post('/upload', function (req, res) {
 				file_data_JSON.push(req.files[key]);
 			}
 		});
-		
 
 		var audio_files_JSON = file_data_JSON.slice(0,audio_size);
 		console.log("Audio File JSON", audio_files_JSON);

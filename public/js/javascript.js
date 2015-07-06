@@ -12,11 +12,11 @@ function errorMessage(urlAddress, formID, errorDivID, action){
 			console.log(xhr.responseText);
 			var err = '<div class="alert alert-danger">';
 			$.each(JSON.parse(xhr.responseText) , function(i, item) {
-				 err +='<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>'+item.msg;
+				 err +='<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>' + item.msg;
 				 err += '</br>'
 			});
 			err += '</div>'
-			$(errorDivID).html(err);    
+			$(errorDivID).html(err);
 			return false;
 		}
    });
