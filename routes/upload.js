@@ -52,7 +52,7 @@ router.get('/upload', function(req, res) {
 		res.render('upload', {notif: req.flash('notif'),
 			auth: req.session.authenticated,
 			admin: req.session.data.admin});	
-	}else{
+	} else {
 		res.render('login', {notif: req.flash('notif'),
 			auth: req.session.authenticated});	
 	}
@@ -68,6 +68,7 @@ router.post('/upload', function (req, res) {
 
 	if (errors) {
 		res.status(422).json(errors);
+		console.log(req.body);
 		return;
 	}
 	
@@ -97,7 +98,6 @@ router.post('/upload', function (req, res) {
 				file_data_JSON.push(req.files[key]);
 			}
 		});
-		
 
 		var audio_files_JSON = file_data_JSON.slice(0,audio_size);
 		console.log("Audio File JSON", audio_files_JSON);
