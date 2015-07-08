@@ -37,16 +37,22 @@ router.get('/music/:music_id', function(req, res, next) {
 
 		    for (var i = 1; i < audios.length; i++){
 		    	audio_paths.push('./' + audios[i - 1]);
-		    	//console.log(fs.readFileSync('./' + audios[i - 1]));
 		    };
 		    
 		    for (var i = 1; i < sheets.length; i++){
 		    	sheet_paths.push('./' + sheets[i - 1]);
-		    	//console.log(fs.readFileSync('./' + sheets[i - 1]));
 		    };
+
+		    var stat = fs.statSync(audio_paths[0]);
+		    res.writeHead(200, {
+		        'Content-Type': 'audio/mp3',
+		        'Content-Length': stat.size
+		    });
+
 		    console.log(audio_paths);
 		    console.log(sheet_paths);
-			
+			var readStream = fs.createReadStream(audio_paths[0]).pipe(res);
+		
 		    /*
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
