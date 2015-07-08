@@ -6,10 +6,25 @@
 <!-- Navigation -->
 <% include navbar.html %>
 
+<script>
+	$(document).ready(function() {
+	};
+
+	function load_content(data){
+		var gallery = $('#gallery-items');
+		var audio_url = './' + data.audio; 
+		var sheet_url = './' + data.sheets;
+
+		// Re-apply css to the pictures
+		$('<div class="music_audio">')
+			.append($('<img id=' + count + '>').prop('src', url))
+			.appendTo(gallery);
+	};
+
+</script>
 <!-- Page Content -->
 <div class="container">
 	<div class="row">
-	
 		<%=data[0].name%>	
 		<%=data[0].description%>
 		<%=data[0].created_date%>

@@ -1,15 +1,15 @@
 var path      			= require('path');
-var mysql 				= require('mysql');
+var mysql 			= require('mysql');
 var multer     			= require('multer');
 var express  			= require('express');
 var bodyParser 			= require('body-parser');
 var cookieParser 		= require('cookie-parser');
-var flash 				= require('connect-flash');
+var flash 			= require('connect-flash');
 var session 			= require('express-session');
-var expressValidator 	= require('express-validator');
+var expressValidator 		= require('express-validator');
 var connection  		= require('express-myconnection');
 
-var app 				= express();
+var app 			= express();
 
 /*Set EJS template Engine*/
 app.engine('html', require('ejs').__express);
@@ -54,7 +54,7 @@ var login 			= require('./routes/login');
 var logout			= require('./routes/logout');
 var upload 			= require('./routes/upload');
 var profile			= require('./routes/profile');
-var register 		= require('./routes/register');
+var register 			= require('./routes/register');
 
 app.use('/', home);
 app.use('/', user);
@@ -67,7 +67,7 @@ app.use('/', profile);
 app.use('/', register);
 
 // Start Server
-var server = app.listen(8080,function(){
+var server = app.listen(3000,function(){
    console.log("Listening to port %s",server.address().port);
 });
 

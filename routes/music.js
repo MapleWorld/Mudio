@@ -4,7 +4,7 @@ var router = express.Router();
 router.get('/music', function (req, res) {
 	
 	res.render('music', {notif: req.flash('notif'),
-							auth: req.session.authenticated});
+		auth: req.session.authenticated});
 });
 
 
