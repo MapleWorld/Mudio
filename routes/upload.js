@@ -27,7 +27,7 @@ router.use(multer({
 		  	// Woh! This file/link/etc already exists, so isn't a directory. Can't save in it. Handle appropriately.
 		  	throw new Error('Directory cannot be created because an inode of a different type exists at "' + new_path + '"');
 		}
-		return new_path;
+		return new_path
 	},
 	rename: function (fieldname, filename) {
 		if (fieldname === "music_audio_files"){

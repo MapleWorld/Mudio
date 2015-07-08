@@ -7,19 +7,24 @@
 <% include navbar.html %>
 
 <script>
-	$(document).ready(function() {
-	};
 
-	function load_content(data){
-		var gallery = $('#gallery-items');
-		var audio_url = './' + data.audio; 
-		var sheet_url = './' + data.sheets;
+$(document).ready(function() {
+    console.log( "ready!" );
+});
 
-		// Re-apply css to the pictures
-		$('<div class="music_audio">')
-			.append($('<img id=' + count + '>').prop('src', url))
-			.appendTo(gallery);
-	};
+function upload_content(data){
+		var audio = $('#audio-items');
+	    var audio_urls = [];
+	    var sheet_urls = [];
+
+	    for (var i = 0; i < data.audio_files.split(",").length; i++){
+	    	audio_urls.append('./' + data.audio_files);
+	    };
+
+	    for (var i = 0; i < data.sheet_files.split(",").length; i++){
+	    	sheet_urls.append('./' + data.sheets_files);
+	    };
+};
 
 </script>
 <!-- Page Content -->

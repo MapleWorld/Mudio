@@ -1,12 +1,11 @@
-var express = require('express');
-var router = express.Router();
+var express 	= require('express');
+var router 		= express.Router();
+var fs 			= require("fs");
 
 router.get('/music', function (req, res) {
-	
 	res.render('music', {notif: req.flash('notif'),
 		auth: req.session.authenticated});
 });
-
 
 // Get specific project data
 router.get('/music/:music_id', function(req, res, next) {
@@ -30,6 +29,25 @@ router.get('/music/:music_id', function(req, res, next) {
 				return res.send("Music Not found");
 			}
 
+			var data = rows[0];
+			var audio_paths = [];
+		    var sheet_paths = [];
+		    var audios = data.audio.split(",");
+		    var sheets = data.sheets.split(",");
+
+		    for (var i = 1; i < audios.length; i++){
+		    	audio_paths.push('./' + audios[i - 1]);
+		    	//console.log(fs.readFileSync('./' + audios[i - 1]));
+		    };
+		    
+		    for (var i = 1; i < sheets.length; i++){
+		    	sheet_paths.push('./' + sheets[i - 1]);
+		    	//console.log(fs.readFileSync('./' + sheets[i - 1]));
+		    };
+		    console.log(audio_paths);
+		    console.log(sheet_paths);
+			
+		    /*
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
 						 auth: req.session.authenticated,
@@ -41,8 +59,11 @@ router.get('/music/:music_id', function(req, res, next) {
 						 auth: req.session.authenticated,
 						 data:rows});	
 			}
+			*/
 		});
 	});
 });
+
+
 
 module.exports = router;
