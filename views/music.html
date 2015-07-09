@@ -13,17 +13,7 @@ $(document).ready(function() {
 });
 
 function upload_content(data){
-		var audio = $('#audio-items');
-	    var audio_urls = [];
-	    var sheet_urls = [];
 
-	    for (var i = 0; i < data.audio_files.split(",").length; i++){
-	    	audio_urls.append('./' + data.audio_files);
-	    };
-
-	    for (var i = 0; i < data.sheet_files.split(",").length; i++){
-	    	sheet_urls.append('./' + data.sheets_files);
-	    };
 };
 
 </script>
@@ -34,6 +24,12 @@ function upload_content(data){
 		<%=data[0].description%>
 		<%=data[0].created_date%>
 	</div>
+
+	<audio controls>
+	    <source src="http://localhost:3000/music/16" type="audio/mpeg">
+	    Your browser does not support the audio element.
+	</audio>
+
 </div>
 
 <!-- Bootstrapped Footer -->

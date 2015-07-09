@@ -1,6 +1,7 @@
 var express 	= require('express');
 var router 		= express.Router();
 var fs 			= require("fs");
+var ms 			= require('mediaserver');
 
 router.get('/music', function (req, res) {
 	res.render('music', {notif: req.flash('notif'),
@@ -43,9 +44,12 @@ router.get('/music/:music_id', function(req, res, next) {
 		    	sheet_paths.push('./' + sheets[i - 1]);
 		    };
 
+
+		    ms.pipe(req, res, audio_paths[0]);
+		    /*
 		    var stat = fs.statSync(audio_paths[0]);
 		    res.writeHead(200, {
-		        'Content-Type': 'audio/mp3',
+		        'Content-Type': 'audio/mpeg',
 		        'Content-Length': stat.size
 		    });
 
@@ -53,7 +57,7 @@ router.get('/music/:music_id', function(req, res, next) {
 		    console.log(sheet_paths);
 			var readStream = fs.createReadStream(audio_paths[0]).pipe(res);
 		
-		    /*
+		    
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
 						 auth: req.session.authenticated,
