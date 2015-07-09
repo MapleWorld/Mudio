@@ -1,7 +1,6 @@
 var express 	= require('express');
 var router 		= express.Router();
 var fs 			= require("fs");
-var ms 			= require('mediaserver');
 
 router.get('/music', function (req, res) {
 	res.render('music', {notif: req.flash('notif'),
@@ -30,23 +29,9 @@ router.get('/music/:music_id', function(req, res, next) {
 				return res.send("Music Not found");
 			}
 
-			var data = rows[0];
-			var audio_paths = [];
-		    var sheet_paths = [];
-		    var audios = data.audio.split(",");
-		    var sheets = data.sheets.split(",");
-
-		    for (var i = 1; i < audios.length; i++){
-		    	audio_paths.push('./' + audios[i - 1]);
-		    };
-		    
-		    for (var i = 1; i < sheets.length; i++){
-		    	sheet_paths.push('./' + sheets[i - 1]);
-		    };
-
-
+			/*
 		    ms.pipe(req, res, audio_paths[0]);
-		    /*
+		    
 		    var stat = fs.statSync(audio_paths[0]);
 		    res.writeHead(200, {
 		        'Content-Type': 'audio/mpeg',
@@ -56,7 +41,7 @@ router.get('/music/:music_id', function(req, res, next) {
 		    console.log(audio_paths);
 		    console.log(sheet_paths);
 			var readStream = fs.createReadStream(audio_paths[0]).pipe(res);
-		
+			*/
 		    
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
@@ -69,11 +54,21 @@ router.get('/music/:music_id', function(req, res, next) {
 						 auth: req.session.authenticated,
 						 data:rows});	
 			}
-			*/
 		});
 	});
 });
 
+router.get('/audio/:audio_path', function(req, res) {
+	console.log("tests");
+	
+	var path = "uploaded/3/" + req.params.audio_path;
+	var stat = fs.statSync(path);
+    res.writeHead(200, {
+        'Content-Type': 'audio/mpeg',
+        'Content-Length': stat.size
+    });
 
+	var readStream = fs.createReadStream(path).pipe(res);
+});
 
 module.exports = router;
