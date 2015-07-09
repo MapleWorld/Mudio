@@ -10,10 +10,28 @@
 
 $(document).ready(function() {
     console.log( "ready!" );
+    // upload_audio();
 });
 
-function upload_content(data){
+function upload_audio(data){
+	console.log("test");
+	var audio_paths = [];
+    var audios = data.audio.split(",");
+    for (var i = 1; i < audios.length; i++){
+    	audio_paths.push(audios[i - 1]);
+    	var encode_audio_path = audio_paths.replace("/", "~");
+    	encode_audio_path = audio_paths.replace("\\", "~");
+    	add_audio(encode_audio_path);
+    };
+};
 
+function add_audio(path){
+	var content = "<audio controls>";
+	content += "<source src=http://localhost:3000/audio/" + path + "type='audio/mpeg'>";
+	content += "Your browser does not support the audio element.";
+	content ++ "</audio>";
+	
+	$("#audio1").html(content);
 };
 
 </script>
@@ -25,12 +43,8 @@ function upload_content(data){
 		<%=data[0].created_date%>
 	</div>
 
-	<audio controls>
-	    <source src=<%="http://localhost:3000/audio/" + data[0].sheets%> type="audio/mpeg">
-	    Your browser does not support the audio element.
-	</audio>
-
-	<p><%="http://localhost:3000/audio/" + data[0].sheets%></p>
+	<div id="audio1"></div>
+	<%= JSON.stringify(data) %>
 </div>
 
 <!-- Bootstrapped Footer -->

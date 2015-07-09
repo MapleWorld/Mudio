@@ -28,20 +28,6 @@ router.get('/music/:music_id', function(req, res, next) {
 			if(rows.length < 1){
 				return res.send("Music Not found");
 			}
-
-			/*
-		    ms.pipe(req, res, audio_paths[0]);
-		    
-		    var stat = fs.statSync(audio_paths[0]);
-		    res.writeHead(200, {
-		        'Content-Type': 'audio/mpeg',
-		        'Content-Length': stat.size
-		    });
-
-		    console.log(audio_paths);
-		    console.log(sheet_paths);
-			var readStream = fs.createReadStream(audio_paths[0]).pipe(res);
-			*/
 		    
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
@@ -59,15 +45,13 @@ router.get('/music/:music_id', function(req, res, next) {
 });
 
 router.get('/audio/:audio_path', function(req, res) {
-	console.log("tests");
-	
-	var path = "uploaded/3/" + req.params.audio_path;
+	console.log("Audio Path Test", req.params.audio_path);
+	var path = req.params.audio_path.replace("~", "/");
 	var stat = fs.statSync(path);
     res.writeHead(200, {
         'Content-Type': 'audio/mpeg',
         'Content-Length': stat.size
     });
-
 	var readStream = fs.createReadStream(path).pipe(res);
 });
 
