@@ -44,15 +44,18 @@ router.get('/music/:music_id', function(req, res, next) {
 	});
 });
 
-router.get('/audio/:audio_path', function(req, res) {
-	console.log("Audio Path Test", req.params.audio_path);
-	var path = req.params.audio_path.replace("~", "/");
+router.get('/audio/uploaded/:user_id/:audio_file', function(req, res) {
+	var audio_file = req.params.audio_file;
+	var path = "uploaded/" + req.params.user_id + "/" + audio_file;
 	var stat = fs.statSync(path);
+
     res.writeHead(200, {
         'Content-Type': 'audio/mpeg',
         'Content-Length': stat.size
     });
+	
 	var readStream = fs.createReadStream(path).pipe(res);
 });
+
 
 module.exports = router;

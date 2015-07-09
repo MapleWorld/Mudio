@@ -9,42 +9,46 @@
 <script>
 
 $(document).ready(function() {
-    console.log( "ready!" );
-    // upload_audio();
+    music_data = <%- JSON.stringify(data[0]) %>;
+    upload_audio(music_data);
 });
 
 function upload_audio(data){
-	console.log("test");
-	var audio_paths = [];
-    var audios = data.audio.split(",");
-    for (var i = 1; i < audios.length; i++){
-    	audio_paths.push(audios[i - 1]);
-    	var encode_audio_path = audio_paths.replace("/", "~");
-    	encode_audio_path = audio_paths.replace("\\", "~");
-    	add_audio(encode_audio_path);
+    var music_audio_data = data.audio;
+    var audio_path = music_audio_data.split(",");
+    var audio_ids = ["#audio1", "#audio2"];
+
+    for (var i = 1; i < audio_path.length; i++){
+    	console.log(audio_path[i - 1]);
+    	add_audio(audio_path[i - 1], audio_ids[i - 1]);
     };
 };
 
-function add_audio(path){
+function add_audio(path, audio_id){
 	var content = "<audio controls>";
-	content += "<source src=http://localhost:3000/audio/" + path + "type='audio/mpeg'>";
+	content += "<source src=http://localhost:3000/audio/" + path + " type='audio/mpeg'>";
 	content += "Your browser does not support the audio element.";
-	content ++ "</audio>";
+	content += "</audio>";
 	
-	$("#audio1").html(content);
+	$(audio_id).html(content);
 };
 
 </script>
+
 <!-- Page Content -->
 <div class="container">
-	<div class="row">
-		<%=data[0].name%>	
-		<%=data[0].description%>
-		<%=data[0].created_date%>
-	</div>
 
 	<div id="audio1"></div>
-	<%= JSON.stringify(data) %>
+
+	<div id="audio2"></div>
+
+	<!-- 
+	<audio controls>
+		<source src=<%= "http://localhost:3000/audio/" + data[0].sheets%>  type='audio/mpeg'>
+		Your browser does not support the audio element.
+	</audio>
+	-->
+
 </div>
 
 <!-- Bootstrapped Footer -->
