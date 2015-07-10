@@ -57,5 +57,18 @@ router.get('/audio/uploaded/:user_id/:audio_file', function(req, res) {
 	var readStream = fs.createReadStream(path).pipe(res);
 });
 
+/*
+router.get('/audio/uploaded/:user_id/:sheet_file', function(req, res) {
+	var sheet_file = req.params.audio_file;
+	var path = "uploaded/" + req.params.user_id + "/" + sheet_file;
+	var stat = fs.statSync(path);
 
+    res.writeHead(200, {
+        'Content-Type': 'text/html',
+        'Content-Length': stat.size
+    });
+	
+	var readStream = fs.createReadStream(path).pipe(res);
+});
+*/
 module.exports = router;

@@ -87,21 +87,17 @@ router.post('/upload', function (req, res) {
 				file_data_JSON.push(req.files[key]);
 			}
 		});
-		
-		var sheet_files_JSON = file_data_JSON.slice(0, audio_size);
-		console.log("Sheet File JSON", sheet_files_JSON);
-		for (var i = 0; i < sheet_size; i++){
-			sheet_files.push(sheet_files_JSON[i].path);
-			sheet_files_string += sheet_files_JSON[i].path + ",";
+
+		for (var i = 0; i < file_data_JSON.length; i++){
+			if (file_data_JSON[i].fieldname === "music_audio_files"){
+				audio_files.push(file_data_JSON[i].path);
+				audio_files_string += file_data_JSON[i].path + ",";
+			}else {
+				sheet_files.push(file_data_JSON[i].path);
+				sheet_files_string += file_data_JSON[i].path + ",";
+			}
 		};
 
-		var audio_files_JSON = file_data_JSON.slice(audio_size, audio_size + sheet_size);
-		console.log("Audio File JSON", audio_files_JSON);
-		for (var i = 0; i < audio_size; i++){
-			audio_files.push(audio_files_JSON[i].path);
-			audio_files_string += audio_files_JSON[i].path + ",";
-		};
-	
 		music_data = {
 			owner			: req.session.data.id,
 			name			: req.body.music_name,
@@ -113,6 +109,8 @@ router.post('/upload', function (req, res) {
 			comparable_date	: tools.currentTime()[1]
 		};
 
+		console.log(music_data);
+		
 		req.getConnection(function (err, conn) {
 
 			if (err){
