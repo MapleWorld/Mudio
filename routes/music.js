@@ -44,15 +44,23 @@ router.get('/music/:music_id', function(req, res, next) {
 	});
 });
 
-router.get('/audio/uploaded/:user_id/:audio_file', function(req, res) {
-	var audio_file = req.params.audio_file;
-	var path = "uploaded/" + req.params.user_id + "/" + audio_file;
+router.get('/load/uploaded/:user_id/:file_name', function(req, res) {
+	var file_name = req.params.file_name;
+	var path = "uploaded/" + req.params.user_id + "/" + file_name;
 	var stat = fs.statSync(path);
 
-    res.writeHead(200, {
-        'Content-Type': 'audio/mpeg',
-        'Content-Length': stat.size
-    });
+	console.log(file_name, req.params.file_name.includes(".mp3"));
+	if (file_name.includes(".mp3")) {
+	    res.writeHead(200, {
+	        'Content-Type': 'audio/mpeg',
+	        'Content-Length': stat.size
+	    });
+    } else {
+	    res.writeHead(200, {
+	        'Content-Type': 'text/html',
+	        'Content-Length': stat.size
+	    });
+    }
 	
 	var readStream = fs.createReadStream(path).pipe(res);
 });
