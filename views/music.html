@@ -11,7 +11,7 @@
 $(document).ready(function() {
     music_data = <%- JSON.stringify(data[0]) %>;
     upload_audio(music_data);
-    //upload_sheet(music_data);
+    upload_sheet(music_data);
 });
 
 function upload_audio(data){
@@ -24,18 +24,24 @@ function upload_audio(data){
     	add_audio(audio_path[i - 1], audio_ids[i - 1]);
     };
 };
-/*
-function upload_sheet(data){
-    var music_sheet_data = data.audio;
-    var audio_path = music_audio_data.split(",");
-    var audio_ids = ["#audio1", "#audio2"];
 
-    for (var i = 1; i < audio_path.length; i++){
-    	console.log(audio_path[i - 1]);
-    	add_audio(audio_path[i - 1], audio_ids[i - 1]);
+function upload_sheet(data){
+    var music_sheet_data = data.sheets;
+    var sheet_path = music_sheet_data.split(",");
+
+    console.log("asd");
+    for (var i = 1; i < sheet_path.length; i++){
+    	console.log(sheet_path[i - 1]);
+    	var sheet_id = "#sheet" + (i - 1);
+    	add_sheet(sheet_path[i - 1], sheet_id);
     };
 }
-*/
+
+function add_sheet(path, sheet_id){
+	var content = "<img src=http://localhost:3000/load/" + path + " style='width:304px;height:228px;'>";
+	$(sheet_id).html(content);
+};
+
 function add_audio(path, audio_id){
 	var content = "<audio controls>";
 	content += "<source src=http://localhost:3000/load/" + path + " type='audio/mpeg'>";
@@ -53,6 +59,10 @@ function add_audio(path, audio_id){
 	<div id="audio1"></div>
 
 	<div id="audio2"></div>
+
+	<div id="sheet2"></div>
+
+	<div id="sheet2"></div>
 
 	<!-- 
 	<audio controls>
