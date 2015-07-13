@@ -49,8 +49,7 @@ router.get('/load/uploaded/:user_id/:file_name', function(req, res) {
 	var path = "uploaded/" + req.params.user_id + "/" + file_name;
 	var stat = fs.statSync(path);
 
-	console.log(file_name, req.params.file_name.includes(".mp3"));
-	if (file_name.includes(".mp3")) {
+	if (file_name.indexOf(".mp3") > -1 ) {
 	    res.writeHead(200, {
 	        'Content-Type': 'audio/mpeg',
 	        'Content-Length': stat.size
@@ -65,18 +64,4 @@ router.get('/load/uploaded/:user_id/:file_name', function(req, res) {
 	var readStream = fs.createReadStream(path).pipe(res);
 });
 
-/*
-router.get('/audio/uploaded/:user_id/:sheet_file', function(req, res) {
-	var sheet_file = req.params.audio_file;
-	var path = "uploaded/" + req.params.user_id + "/" + sheet_file;
-	var stat = fs.statSync(path);
-
-    res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Content-Length': stat.size
-    });
-	
-	var readStream = fs.createReadStream(path).pipe(res);
-});
-*/
 module.exports = router;
