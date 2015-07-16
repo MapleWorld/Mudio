@@ -40,6 +40,7 @@ function upload_sheet(data){
 function add_sheet(path, sheet_id){
 	var content = "<img src=http://localhost:3000/load/" + path + " style='width:304px;height:228px;'>";
 	$(sheet_id).html(content);
+	console.log(sheet_id, content);
 };
 
 function add_audio(path, audio_id){
@@ -60,11 +61,12 @@ function add_audio(path, audio_id){
 
 	<div id="audio2"></div>
 
-	<div id="sheet2"></div>
+	<div id="sheet0"></div>
 
-	<div id="sheet2"></div>
+	<div id="sheet1"></div>
 
-	<!-- 
+	<!--
+	<img src="http://localhost:3000/load/uploaded/3/1.jpg" style="width:304px;height:228px;">; 
 	<audio controls>
 		<source src=<%= "http://localhost:3000/load/" + data[0].audio%>  type='audio/mpeg'>
 		Your browser does not support the audio element.
