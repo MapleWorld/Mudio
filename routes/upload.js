@@ -15,7 +15,7 @@ router.use(multer({
 	dest: './uploaded/',
 	changeDest: function(dest, req, res) {
 		var stat = null;
-		var new_path = dest + req.session.data.id;
+		var new_path = dest + req.session.data.id + '/'+ req.session.data.uploaded_music;
 		try {
 			// using fs.statSync; NOTE that fs.existsSync is now deprecated; fs.accessSync could be used but is only nodejs >= v0.12.0
 		  	stat = fs.statSync(new_path);
@@ -129,6 +129,14 @@ router.post('/upload', function (req, res) {
 					res.status(422).json([{msg:err.code}]);
 					return ;
 				}
+
+				conn.query("UPDATE user set ? WHERE id = ? ",[req.session.data, req.session.data.id], function(err, rows){
+					if(err){
+						console.log("Database error, check your query ", err);
+						return ;
+					}
+		        });
+
 				console.log("Files uploaded successfully");
 				req.flash('notif', 'You have successfully uploaded the music');
 				res.render('profile', {notif: req.flash('notif'),

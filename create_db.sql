@@ -19,6 +19,7 @@ create table user (
 	phone varchar(20),
 	gender varchar(10),
 	user_reputation int default 0,
+	uploaded_music int default 0,
 
 	-- Admin
 	admin tinyint default 0 NOT NULL
