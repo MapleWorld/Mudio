@@ -29,7 +29,6 @@ function upload_sheet(data){
     var music_sheet_data = data.sheets;
     var sheet_path = music_sheet_data.split(",");
 
-    console.log("asd");
     for (var i = 1; i < sheet_path.length; i++){
     	console.log(sheet_path[i - 1]);
     	var sheet_id = "#sheet" + (i - 1);
@@ -38,7 +37,7 @@ function upload_sheet(data){
 }
 
 function add_sheet(path, sheet_id){
-	var content = "<img src=http://localhost:3000/load/" + path + " style='width:304px;height:228px;'>";
+	var content = "<img src=http://localhost:3000/load/" + path + " style='width:800px;height:800px;'>";
 	$(sheet_id).html(content);
 	console.log(sheet_id, content);
 };
@@ -61,21 +60,13 @@ function add_audio(path, audio_id){
 
 	<div id="audio2"></div>
 
+	<h2> Rating: <%= data[0].rating %> </h2>
+	
+    <h2> Visitor: <%= data[0].visitor %> </h2>
+
 	<div id="sheet0"></div>
 
 	<div id="sheet1"></div>
-
-	<!--
-	<img src="http://localhost:3000/load/uploaded/3/1.jpg" style="width:304px;height:228px;">; 
-	<audio controls>
-		<source src=<%= "http://localhost:3000/load/" + data[0].audio%>  type='audio/mpeg'>
-		Your browser does not support the audio element.
-	</audio>
-	-->
-
-	<!--
-	<img src=<%="http://localhost:3000/load/" + data[0].sheet%> alt="Mountain View" style="width:304px;height:228px;">
-	-->
 
 </div>
 

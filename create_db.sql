@@ -7,7 +7,7 @@
 	
 create table user (
 	-- General Data
-	id int AUTO_INCREMENT PRIMARY KEY,
+	u_id int AUTO_INCREMENT PRIMARY KEY,
 	username varchar(50) UNIQUE NOT NULL,
 	password varchar(20) NOT NULL,
 	created_date datetime NOT NULL,
@@ -25,23 +25,29 @@ create table user (
 	admin tinyint default 0 NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table music(
-	id int AUTO_INCREMENT PRIMARY KEY,
+create table music (
+	m_id int AUTO_INCREMENT PRIMARY KEY,
 	name varchar(255) NOT NULL,
 	description varchar(255),
-	audio varchar(255),						-- Rename audio file name to id (prevent duplicate file name)
+	audio varchar(255),				-- Rename audio file name to id (prevent duplicate file name)
 	owner int NOT NULL,
 	instrument varchar(255),
 	sheets varchar(255) NOT NULL, 	-- Any format but need to add id to their name before saving
-	vistor int default 0,
+	visitor int default 0,
 	rating int default 0,
 	created_date datetime NOT NULL,
 	comparable_date int default 0,
-	FOREIGN KEY (owner) references user(id)
+	FOREIGN KEY (owner) references user(u_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	
-
-	
-
+create table comment (
+	c_id int AUTO_INCREMENT PRIMARY KEY,
+	created_date datetime NOT NULL,
+	comparable_date int default 0,
+	commenter int NOT NULL,
+	receiver int NOT NULL,
+	FOREIGN KEY (commenter) references user(u_id),
+	FOREIGN KEY (receiver) references music(m_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 	
 	

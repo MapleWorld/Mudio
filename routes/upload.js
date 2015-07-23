@@ -16,7 +16,7 @@ router.use(multer({
 	dest: './uploaded/',
 	changeDest: function(dest, req, res) {
 		var stat = null;
-		var new_path = dest + req.session.data.id + '/'+ req.session.data.uploaded_music;
+		var new_path = dest + req.session.data.u_id + '/'+ req.session.data.uploaded_music;
 		try {
 			// using fs.statSync; NOTE that fs.existsSync is now deprecated; fs.accessSync could be used but is only nodejs >= v0.12.0
 		  	stat = fs.statSync(new_path);
@@ -100,7 +100,7 @@ router.post('/upload', function (req, res) {
 		};
 
 		music_data = {
-			owner			: req.session.data.id,
+			owner			: req.session.data.u_id,
 			name			: req.body.music_name,
 			description		: req.body.music_description,
 			audio			: audio_files_string,
@@ -134,7 +134,7 @@ router.post('/upload', function (req, res) {
 				// Increment by 1
 				req.session.data.uploaded_music += 1;
 
-				conn.query("UPDATE user set ? WHERE id = ? ",[req.session.data, req.session.data.id], function(err, rows){
+				conn.query("UPDATE user set ? WHERE id = ? ",[req.session.data, req.session.data.u_id], function(err, rows){
 					if(err){
 						console.log("Database error, check your query ", err);
 						return ;

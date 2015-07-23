@@ -6,10 +6,6 @@
 <!-- Navigation -->
 <% include navbar.html %>
 
-<!--Bootstrapped menu bar-->
-<!-- Menu -->
-<% include menu.html %>
-
 <!-- Page Content -->
 <div class="container">
 
@@ -30,8 +26,8 @@
 				    <tbody>
 						<% for(var i = 0;i < data.length;i++) { %>
 							<tr>
-								<td><%=data[i].id%></td>
-								<td><a href="/music/<%=data[i].id%>"><%=data[i].name%></a></td>						
+								<td><%=data[i].m_id%></td>
+								<td><a href="/music/<%=data[i].m_id%>"><%=data[i].name%></a></td>						
 							</tr>
 						<% } %>
 				    </tbody>

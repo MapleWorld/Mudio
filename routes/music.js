@@ -17,7 +17,7 @@ router.get('/music/:music_id', function(req, res, next) {
 			return next("Cannot Connect");
 		}
 
-		var query = conn.query("SELECT * FROM music WHERE music.id = ? ",[music_id], function(err,rows){
+		var query = conn.query("SELECT * FROM music WHERE music.m_id = ? ",[music_id], function(err,rows){
 
 			if(err){
 				console.log(err);
@@ -31,13 +31,13 @@ router.get('/music/:music_id', function(req, res, next) {
 		    
 			if (req.session.authenticated){
 				res.render('music', {notif: req.flash('notif'),
-						 auth: req.session.authenticated,
+						 auth:req.session.authenticated,
 						 data:rows,
-						 user_id: req.session.data.id,
+						 user_id: req.session.data.u_id,
 						 admin: req.session.data.admin});	
 			}else{
 				res.render('music', {notif: req.flash('notif'),
-						 auth: req.session.authenticated,
+						 auth:req.session.authenticated,
 						 data:rows});	
 			}
 		});
