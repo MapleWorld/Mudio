@@ -44,9 +44,9 @@ router.get('/music/:music_id', function(req, res, next) {
 	});
 });
 
-router.get('/load/uploaded/:user_id/:file_name', function(req, res) {
+router.get('/load/uploaded/:user_id/:folder/:file_name', function(req, res) {
 	var file_name = req.params.file_name;
-	var path = "uploaded/" + req.params.user_id + "/" + file_name;
+	var path = "uploaded/" + req.params.user_id + "/" + req.params.folder + "/" + file_name;
 	var stat = fs.statSync(path);
 
 	if (file_name.indexOf(".mp3") > -1 ) {

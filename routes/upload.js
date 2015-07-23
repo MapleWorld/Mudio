@@ -1,4 +1,5 @@
 var express 			= require('express');
+var mkdirp 				= require('mkdirp');
 var multer     			= require('multer');
 var fs 					= require('fs');
 var router 				= express.Router();
@@ -21,7 +22,7 @@ router.use(multer({
 		  	stat = fs.statSync(new_path);
 		} catch(err) {
 		  	// for nested folders, look at npm package "mkdirp"
-		  	fs.mkdirSync(new_path);
+		  	mkdirp.sync(new_path);
 		}
 		if (stat && !stat.isDirectory()) {
 		  	// Woh! This file/link/etc already exists, so isn't a directory. Can't save in it. Handle appropriately.
@@ -130,12 +131,18 @@ router.post('/upload', function (req, res) {
 					return ;
 				}
 
+				// Increment by 1
+				req.session.data.uploaded_music += 1;
+
 				conn.query("UPDATE user set ? WHERE id = ? ",[req.session.data, req.session.data.id], function(err, rows){
 					if(err){
 						console.log("Database error, check your query ", err);
 						return ;
 					}
 		        });
+
+				audio_file_name = 0;
+				music_sheet_file_name = 0;
 
 				console.log("Files uploaded successfully");
 				req.flash('notif', 'You have successfully uploaded the music');
