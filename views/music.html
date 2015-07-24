@@ -12,14 +12,23 @@ $(document).ready(function() {
     music_data = <%- JSON.stringify(data[0]) %>;
     upload_audio(music_data);
     upload_sheet(music_data, 0);
+    var length = music_data.sheets.split(",").length - 2;
 
     $("#prev-sheet, #next-sheet").on('click', function(event) {
         var value = parseInt($("#sheet").attr("value"));
         if (this.id === "prev-sheet"){
-            value = value - 1;
+            if (value - 1 < 0){
+                console.log("too small");
+            }else {
+                value -= 1;
+            }
         }
         if (this.id === "next-sheet"){
-            value = value + 1;
+            if (value + 1 > length){
+                console.log("too big");
+            }else {
+                value += 1;
+            }
         }
         upload_sheet(music_data, value);
         $("#sheet").attr("value", value);
@@ -63,8 +72,8 @@ function upload_sheet(data, num){
 	<div id="audio2"></div>
 
     <div> 
-        <button id="prev-sheet">Prev</button>
-        <button id="next-sheet">Next</button>
+        <a id="prev-sheet">Prev</a>
+        <a id="next-sheet">Next</a>
     	<p> Rating: <%= data[0].rating %> </p>
         <p> Visitor: <%= data[0].visitor %> </p>
     </div>
