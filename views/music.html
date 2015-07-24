@@ -11,7 +11,20 @@
 $(document).ready(function() {
     music_data = <%- JSON.stringify(data[0]) %>;
     upload_audio(music_data);
-    upload_sheet(music_data);
+    upload_sheet(music_data, 0);
+    var value = parseInt($("#sheet").attr("value"));
+    
+    $("#prev-sheet").click(function() {
+        value = value - 1;
+        upload_sheet(music_data, value);
+    });
+
+    $("#next-sheet").click(function() {
+        value = value + 1;
+        upload_sheet(music_data, value);
+    });
+
+    $("#sheet").attr("value", value);
 });
 
 function upload_audio(data){
@@ -25,15 +38,10 @@ function upload_audio(data){
     };
 };
 
-function upload_sheet(data){
+function upload_sheet(data, num){
     var music_sheet_data = data.sheets;
     var sheet_path = music_sheet_data.split(",");
-
-    for (var i = 1; i < sheet_path.length; i++){
-    	console.log(sheet_path[i - 1]);
-    	var sheet_id = "#sheet" + (i - 1);
-    	add_sheet(sheet_path[i - 1], sheet_id);
-    };
+    add_sheet(sheet_path[num], "#sheet");
 }
 
 function add_sheet(path, sheet_id){
@@ -64,11 +72,10 @@ function add_audio(path, audio_id){
 	
     <h2> Visitor: <%= data[0].visitor %> </h2>
 
-    <div id="sheet"></div>
-    
-	<div id="sheet0"></div>
+    <div id="sheet" value="0"></div>
 
-	<div id="sheet1"></div>
+    <button id="prev-sheet">Prev</button>
+    <button id="next-sheet">Next</button>
 
 </div>
 
