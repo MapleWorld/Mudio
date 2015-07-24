@@ -13,14 +13,14 @@ $(document).ready(function() {
     upload_audio(music_data);
     upload_sheet(music_data, 0);
     var value = parseInt($("#sheet").attr("value"));
-    
-    $("#prev-sheet").click(function() {
-        value = value - 1;
-        upload_sheet(music_data, value);
-    });
 
-    $("#next-sheet").click(function() {
-        value = value + 1;
+    $("#prev-sheet, #next-sheet").on('click', function(event) {
+        if (this.id === "prev-sheet"){
+            value = value - 1;
+        }
+        if (this.id == "next-sheet"){
+            value = value + 1;
+        }
         upload_sheet(music_data, value);
     });
 
