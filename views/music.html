@@ -38,18 +38,6 @@ function upload_audio(data){
     };
 };
 
-function upload_sheet(data, num){
-    var music_sheet_data = data.sheets;
-    var sheet_path = music_sheet_data.split(",");
-    add_sheet(sheet_path[num], "#sheet");
-}
-
-function add_sheet(path, sheet_id){
-	var content = "<img src=http://localhost:3000/load/" + path + " style='width:800px;height:800px;'>";
-	$(sheet_id).html(content);
-	console.log(sheet_id, content);
-};
-
 function add_audio(path, audio_id){
 	var content = "<audio controls>";
 	content += "<source src=http://localhost:3000/load/" + path + " type='audio/mpeg'>";
@@ -57,6 +45,13 @@ function add_audio(path, audio_id){
 	content += "</audio>";
 	
 	$(audio_id).html(content);
+};
+
+function upload_sheet(data, num){
+    var music_sheet_data = data.sheets;
+    var sheet_path = music_sheet_data.split(",");
+    var content = "<img src=http://localhost:3000/load/" + sheet_path[num] + " style='width:800px;height:800px;'>";
+    $("#sheet").html(content);
 };
 
 </script>
@@ -68,14 +63,14 @@ function add_audio(path, audio_id){
 
 	<div id="audio2"></div>
 
-	<h2> Rating: <%= data[0].rating %> </h2>
-	
-    <h2> Visitor: <%= data[0].visitor %> </h2>
+    <div> 
+        <button id="prev-sheet">Prev</button>
+        <button id="next-sheet">Next</button>
+    	<p> Rating: <%= data[0].rating %> </p>
+        <p> Visitor: <%= data[0].visitor %> </p>
+    </div>
 
     <div id="sheet" value="0"></div>
-
-    <button id="prev-sheet">Prev</button>
-    <button id="next-sheet">Next</button>
 
 </div>
 
