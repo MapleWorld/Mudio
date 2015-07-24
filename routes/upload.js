@@ -134,7 +134,7 @@ router.post('/upload', function (req, res) {
 				// Increment by 1
 				req.session.data.uploaded_music += 1;
 
-				conn.query("UPDATE user set ? WHERE id = ? ",[req.session.data, req.session.data.u_id], function(err, rows){
+				conn.query("UPDATE user set ? WHERE u_id = ? ",[req.session.data, req.session.data.u_id], function(err, rows){
 					if(err){
 						console.log("Database error, check your query ", err);
 						return ;
