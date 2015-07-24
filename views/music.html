@@ -50,8 +50,7 @@ function add_audio(path, audio_id){
 	var content = "<audio controls>";
 	content += "<source src=http://localhost:3000/load/" + path + " type='audio/mpeg'>";
 	content += "Your browser does not support the audio element.";
-	content += "</audio>";
-	
+	content += "</audio>";	
 	$(audio_id).html(content);
 };
 
