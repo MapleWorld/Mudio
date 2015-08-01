@@ -1,4 +1,5 @@
 var express 			= require('express');
+var mkdirp 				= require('mkdirp');
 var multer     			= require('multer');
 var fs 					= require('fs');
 var router 				= express.Router();
@@ -15,13 +16,13 @@ router.use(multer({
 	dest: './uploaded/',
 	changeDest: function(dest, req, res) {
 		var stat = null;
-		var new_path = dest + req.session.data.id;
+		var new_path = dest + req.session.data.u_id + '/'+ req.session.data.uploaded_music;
 		try {
 			// using fs.statSync; NOTE that fs.existsSync is now deprecated; fs.accessSync could be used but is only nodejs >= v0.12.0
 		  	stat = fs.statSync(new_path);
 		} catch(err) {
 		  	// for nested folders, look at npm package "mkdirp"
-		  	fs.mkdirSync(new_path);
+		  	mkdirp.sync(new_path);
 		}
 		if (stat && !stat.isDirectory()) {
 		  	// Woh! This file/link/etc already exists, so isn't a directory. Can't save in it. Handle appropriately.
@@ -88,24 +89,18 @@ router.post('/upload', function (req, res) {
 			}
 		});
 
-		var audio_files_JSON = file_data_JSON.slice(0,audio_size);
-		console.log("Audio File JSON", audio_files_JSON);
-		for (var i = 0; i < audio_size; i++){
-			audio_files.push(audio_files_JSON[i].path);
-			audio_files_string += audio_files_JSON[i].path + ",";
-		};
-		
-		var sheet_files_JSON = file_data_JSON.slice(audio_size, audio_size + sheet_size);
-		console.log("Sheet File JSON", audio_files_JSON);
-		for (var i = 0; i < sheet_size; i++){
-			sheet_files.push(sheet_files_JSON[i].path);
-			sheet_files_string += sheet_files_JSON[i].path + ",";
+		for (var i = 0; i < file_data_JSON.length; i++){
+			if (file_data_JSON[i].fieldname === "music_audio_files"){
+				audio_files.push(file_data_JSON[i].path);
+				audio_files_string += file_data_JSON[i].path + ",";
+			}else {
+				sheet_files.push(file_data_JSON[i].path);
+				sheet_files_string += file_data_JSON[i].path + ",";
+			}
 		};
 
-		console.log("Files uploaded successfully");
-		
 		music_data = {
-			owner			: req.session.data.id,
+			owner			: req.session.data.u_id,
 			name			: req.body.music_name,
 			description		: req.body.music_description,
 			audio			: audio_files_string,
@@ -115,6 +110,8 @@ router.post('/upload', function (req, res) {
 			comparable_date	: tools.currentTime()[1]
 		};
 
+		console.log(music_data);
+		
 		req.getConnection(function (err, conn) {
 
 			if (err){
@@ -133,6 +130,21 @@ router.post('/upload', function (req, res) {
 					res.status(422).json([{msg:err.code}]);
 					return ;
 				}
+
+				// Increment by 1
+				req.session.data.uploaded_music += 1;
+
+				conn.query("UPDATE user set ? WHERE u_id = ? ",[req.session.data, req.session.data.u_id], function(err, rows){
+					if(err){
+						console.log("Database error, check your query ", err);
+						return ;
+					}
+		        });
+
+				audio_file_name = 0;
+				music_sheet_file_name = 0;
+
+				console.log("Files uploaded successfully");
 				req.flash('notif', 'You have successfully uploaded the music');
 				res.render('profile', {notif: req.flash('notif'),
 						auth: req.session.authenticated});	

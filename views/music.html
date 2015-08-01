@@ -11,6 +11,28 @@
 $(document).ready(function() {
     music_data = <%- JSON.stringify(data[0]) %>;
     upload_audio(music_data);
+    upload_sheet(music_data, 0);
+    var length = music_data.sheets.split(",").length - 2;
+
+    $("#prev-sheet, #next-sheet").on('click', function(event) {
+        var value = parseInt($("#sheet").attr("value"));
+        if (this.id === "prev-sheet"){
+            if (value - 1 < 0){
+                console.log("too small");
+            }else {
+                value -= 1;
+            }
+        }
+        if (this.id === "next-sheet"){
+            if (value + 1 > length){
+                console.log("too big");
+            }else {
+                value += 1;
+            }
+        }
+        upload_sheet(music_data, value);
+        $("#sheet").attr("value", value);
+    });
 });
 
 function upload_audio(data){
@@ -26,11 +48,17 @@ function upload_audio(data){
 
 function add_audio(path, audio_id){
 	var content = "<audio controls>";
-	content += "<source src=http://localhost:3000/audio/" + path + " type='audio/mpeg'>";
+	content += "<source src=http://localhost:3000/load/" + path + " type='audio/mpeg'>";
 	content += "Your browser does not support the audio element.";
-	content += "</audio>";
-	
+	content += "</audio>";	
 	$(audio_id).html(content);
+};
+
+function upload_sheet(data, num){
+    var music_sheet_data = data.sheets;
+    var sheet_path = music_sheet_data.split(",");
+    var content = "<img src=http://localhost:3000/load/" + sheet_path[num] + " style='width:800px;height:800px;'>";
+    $("#sheet").html(content);
 };
 
 </script>
@@ -42,12 +70,14 @@ function add_audio(path, audio_id){
 
 	<div id="audio2"></div>
 
-	<!-- 
-	<audio controls>
-		<source src=<%= "http://localhost:3000/audio/" + data[0].sheets%>  type='audio/mpeg'>
-		Your browser does not support the audio element.
-	</audio>
-	-->
+    <div> 
+        <a id="prev-sheet">Prev</a>
+        <a id="next-sheet">Next</a>
+    	<p> Rating: <%= data[0].rating %> </p>
+        <p> Visitor: <%= data[0].visitor %> </p>
+    </div>
+
+    <div id="sheet" value="0"></div>
 
 </div>
 
