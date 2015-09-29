@@ -1,15 +1,15 @@
 var path      			= require('path');
-var mysql 			= require('mysql');
+var mysql 				= require('mysql');
 var multer     			= require('multer');
 var express  			= require('express');
 var bodyParser 			= require('body-parser');
 var cookieParser 		= require('cookie-parser');
-var flash 			= require('connect-flash');
+var flash 				= require('connect-flash');
 var session 			= require('express-session');
-var expressValidator 		= require('express-validator');
+var expressValidator 	= require('express-validator');
 var connection  		= require('express-myconnection');
 
-var app 			= express();
+var app 				= express();
 
 /*Set EJS template Engine*/
 app.engine('html', require('ejs').__express);
@@ -40,7 +40,7 @@ app.use(connection(mysql,{
 	host     : 'localhost',
 	database : 'music',
 	user     : 'root',
-	password : 'root'
+	password : ''
     },'request')
 );
 
